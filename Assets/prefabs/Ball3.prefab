@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5796694181940090514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.88313, y: -0.48774493, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 7783c86e0febcdc41bdb803d34168f0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81e83d290059856439966c49379015b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,9 +97,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0027256012, y: 0}
   serializedVersion: 2
-  m_Radius: 0.32
+  m_Radius: 1.2820778
 --- !u!50 &5796694181940090513
 Rigidbody2D:
   serializedVersion: 4
@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13fb6acaa5fb6674c9a45000758a5ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5796694181940090513}
   text: {fileID: 2124757134125094582, guid: 0aa1a4aa2ead2c541b6c2f1863c315f6, type: 3}
   textHolder: {fileID: 0}
   score: {fileID: 0}

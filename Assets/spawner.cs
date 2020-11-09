@@ -9,6 +9,7 @@ public class spawner : MonoBehaviour
     public move sc;
     public Text Score;
     public GameObject TextHolder;
+    public Transform y;
     private void Start()
     {
         StartCoroutine("Spawn");
@@ -20,7 +21,8 @@ public class spawner : MonoBehaviour
             for (int i = 0; i < Random.Range(1, 3); i++)
             {
                 GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)],
-                    new Vector2(Random.Range(min.position.x, max.position.x), 5.2f), Quaternion.identity);
+                    new Vector2(Random.Range(min.position.x, max.position.x), 
+                    Random.Range(y.position.y-0.3f, y.position.y+0.3f)), Quaternion.identity);
                 enemy.GetComponent<collide>().text = Score;
                 enemy.GetComponent<collide>().textHolder = TextHolder;
             }

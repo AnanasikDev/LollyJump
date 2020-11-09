@@ -1,35 +1,37 @@
-﻿using System.Data.SqlTypes;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class collide : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public Text text;
     public GameObject textHolder;
     public Score score;
     public int Hp;
     public GameObject SelfCopy;
     public bool spawnedByMySelf = false;
-    public bool alive = true;
     private move sc;
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        //transform.localScale /= 4f;
         sc = GameObject.Find("Player").GetComponent<move>();
         
-        if (transform.localScale.x > 0.6f)
+        if (transform.localScale.x > 0.6f / 4f)
         Hp = Random.Range(2, 3);
 
         score = textHolder.GetComponent<Score>();
         text = textHolder.GetComponent<Text>();
 
         if (!spawnedByMySelf)
-        transform.localScale *= Random.Range(1, 4);
+        {
+            transform.localScale *= Hp;
+            //rb.mass *= v;
+        }
     }
     private void Update()
     {
-        alive = sc.alive;
-        if (!alive) Destroy(gameObject);
+        if (!sc.alive) Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -46,7 +48,8 @@ public class collide : MonoBehaviour
                 transform.position + new Vector3(Random.Range(-2, 2), 1, 0), transform.rotation);
             copy.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Random.Range(6, 11));
             copy.GetComponent<collide>().spawnedByMySelf = true;
-            rb.AddTorque(Random.Range(-60, 60));
+            //rb.AddTorque(Random.Range(-60, 60) * Random.Range(0.8f, 3f));
+            rb.AddForce(new Vector2(Random.Range(-1, 1), Random.Range(0, 1)) * 250);
             if (other.gameObject.tag == "Floor")
             {
                 score.score++;

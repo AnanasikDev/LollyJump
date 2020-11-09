@@ -6,9 +6,11 @@ public class click : MonoBehaviour
 {
     public GameObject player;
     private move sc;
-    public int i;
+    public GameObject Settings;
+    private settings script;
     public void Start()
     {
+        script = Settings.GetComponent<settings>();
         sc = player.GetComponent<move>();
     }
     public void MoveStop()
@@ -18,19 +20,19 @@ public class click : MonoBehaviour
     public void MoveRight()
     {
         sc.x = 1;
-        if (!sc.alive)
+        if (!sc.alive && !script.opened)
             sc.MoveStart();
     }
     public void MoveLeft()
     {
         sc.x = -1;
-        if (!sc.alive)
+        if (!sc.alive && !script.opened)
             sc.MoveStart();
     }
     public void MoveUp()
     {
         sc.y = 1;
-        if (!sc.alive)
+        if (!sc.alive && !script.opened)
             sc.MoveStart();
     }
     public void MoveUpStop()

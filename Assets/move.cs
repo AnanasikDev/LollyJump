@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class move : MonoBehaviour
@@ -19,7 +21,7 @@ public class move : MonoBehaviour
         origin = transform.position;
         rb = GetComponent<Rigidbody2D>();
         Respawn();
-    }
+    } 
     void FixedUpdate()
     {
         if (!alive) { Respawn(); return; }
@@ -45,42 +47,50 @@ public class move : MonoBehaviour
     public void Respawn()
     {
         MoveStop();
-        transform.position = origin; //new Vector3(-0.2f, 1, 0);
-                                     //transform.Translate(Vector3.up * 10);
+        transform.position = origin;
+    }
+    private void MoveFreeze()
+    {
+        rb.Sleep();
+        spawner.GetComponent<spawner>().StopCoroutine("Spawn");
+    }
+    private void MoveUnFreeze()
+    {
+        rb.WakeUp();
+        spawner.GetComponent<spawner>().StartCoroutine("Spawn");
     }
     public void MoveStop()
     {
-        rb.Sleep();
         alive = false;
-        spawner.GetComponent<spawner>().StopCoroutine("Spawn");
+        MoveFreeze();
+
         int lastScore = score.GetComponent<Score>().score;
         //score.GetComponent<Score>().score = 0;
         score.GetComponent<Score>().Write(lastScore.ToString());
     }
     public void MoveStart()
     {
-        rb.WakeUp();
         alive = true;
-        spawner.GetComponent<spawner>().StartCoroutine("Spawn");
-        score.GetComponent<Score>().score = 0;
+        MoveUnFreeze();
+
+        var sc = score.GetComponent<Score>();
+        sc.score = 0;
         //score.GetComponent<Score>().score = 0;
-        score.GetComponent<Score>().Write(0.ToString());
+        sc.Write(0.ToString());
+    }
+    public static class Cache
+    {
+        public static void Write(string path, int n, string end = "\n")
+        {
+            print("written");
+            var writer = new StreamWriter(path, true);
+            writer.Write(n.ToString() + end);
+            writer.Close();
+        }
+        public static string GetLast(string path)
+        {
+            string[] text = File.ReadAllLines(path);
+            return text[text.Length - 1].Remove('\n');
+        }
     }
 }
-
-/*public static class Cache
-{
-    public static void Write(string path, object obj, string end="\n")
-    {
-        var writer = new StreamWriter(path, true);
-        writer.Write(obj.ToString() + end);
-        writer.Close();
-    }
-    public static string GetLast(string path)
-    {
-        var reader = new StreamReader(path);
-        int len = path.Split('\n').Length;
-        string[] text = File.ReadAllLines(path);
-        return text[len - 1];
-    }
-}*/
