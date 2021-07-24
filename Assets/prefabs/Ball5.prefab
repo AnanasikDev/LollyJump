@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6444592248029360226}
   - component: {fileID: 2758430697107337140}
   - component: {fileID: 651826591376947085}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ball5
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -130,12 +130,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7367946830988221579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13fb6acaa5fb6674c9a45000758a5ecd, type: 3}
+  m_Script: {fileID: 11500000, guid: 77e7ba9b6c283ef4fb75164652003407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  textHolder: {fileID: 0}
-  score: {fileID: 0}
   Hp: 0
-  SelfCopy: {fileID: 7367946830988221579}
+  SelfCopy: {fileID: 0}
   spawnedByMySelf: 0
