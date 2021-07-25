@@ -32,6 +32,8 @@ public class EnemySpawner : MonoBehaviour
         instance = this;
         tick = new WaitForSeconds(time);
         StartCoroutine(Spawn());
+
+        Settings.instance.Reload();
     }
     public IEnumerator Spawn()
     {

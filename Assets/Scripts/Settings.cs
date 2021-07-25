@@ -3,75 +3,108 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
+
+    [Header("General")]
+
     public GameObject settingsWindow;
-
-    public Slider ButtonSizeSlider;
-    public GameObject left_right;
-    public Button jump;
-
-    public Slider TextSizeSlider;
-
-    private float score_size;
-
-    private Vector3 btn_size;
-    private Vector3 leftright_size;
-
-    public Slider HardnessSlider;
-
-    public Toggle UseImpulseToggle;
-    public Toggle ShowShadowsToggle;
-
     public bool opened;
-
     public static Settings instance { get; private set; }
+
+    [Header("Settings")]
+
+    [SerializeField] Slider buttonsSizeSlider;
+    public Vector2 buttonsSize;
+
+    [SerializeField] GameObject sideMovementButtons;
+    [SerializeField] GameObject jumpButton;
+    
+    [SerializeField] Slider hardnessSlider;
+    public float hardness;
+
+    [SerializeField] Toggle moveImpulseToggle;
+    public bool moveImpulse;
+
+    [SerializeField] Toggle showShadowsToggle;
+    public bool showShadows;
+
     void Awake() => instance = this;
     private void Start()
     {
-        btn_size = jump.transform.localScale;
-        leftright_size = left_right.transform.localScale;
-
-        score_size = ScoreController.instance.text.fontSize;
+        buttonsSize = jumpButton.transform.localScale;
 
         settingsWindow.SetActive(false);
+
+        if (SavingSystem.opened)
+        {
+            OpenSettings();
+        }
     }
     public void OpenSettings()
     {
+        if (!SavingSystem.opened)
+        {
+            SavingSystem.opened = true;
+            GameStateController.ReloadScene();
+            GameStateController.ExitGame();
+        }
+
         settingsWindow.SetActive(true);
-        ScoreController.instance.text.gameObject.SetActive(false);
+        PlayerController.instance.gameObject.SetActive(false);
         opened = true;
-        GameStateController.ExitGame();
     }
     public void CloseSettings()
     {
+        SavingSystem.opened = false;
+
         settingsWindow.SetActive(false);
-        ScoreController.instance.text.gameObject.SetActive(true);
+        PlayerController.instance.gameObject.SetActive(true);
         opened = false;
-        GameStateController.ExitGame();
+        //GameStateController.ExitGame();
+        //GameStateController.ReloadScene();
     }
 
     public void SetButtonsSize()
     {
-        float value = ButtonSizeSlider.value;
-        jump.transform.localScale = btn_size * value;
-        left_right.transform.localScale = leftright_size * value;
-    }
-    public void SetTextSize()
-    {                                                   
-        float value = TextSizeSlider.value;             
-        ScoreController.instance.text.fontSize = score_size * value;
-    }              
+        buttonsSize = new Vector2(buttonsSizeSlider.value, buttonsSizeSlider.value);
+        jumpButton.transform.localScale = buttonsSize;
+        sideMovementButtons.transform.localScale = buttonsSize;
+    }         
     public void SetHardness()
     {
-        EnemySpawner.instance.SetTick(1 / HardnessSlider.value);
-        StopCoroutine(EnemySpawner.instance.Spawn());
-        StartCoroutine(EnemySpawner.instance.Spawn());
+        hardness = hardnessSlider.value;
+        EnemySpawner.instance.SetTick(1 / hardness);
+        /*StopCoroutine(EnemySpawner.instance.Spawn());
+        StartCoroutine(EnemySpawner.instance.Spawn());*/
     }
     public void SetMovementMode()
     {
-        PlayerController.instance.MoveImpulse = UseImpulseToggle.isOn;
+        moveImpulse = moveImpulseToggle.isOn;
+        PlayerController.instance.MoveImpulse = moveImpulse;
     }
     public void SetShadows()
     {
-        EnemySpawner.instance.PreShow = ShowShadowsToggle.isOn;
+        showShadows = showShadowsToggle.isOn;
+        EnemySpawner.instance.PreShow = showShadows;
+    }
+    private void OnDestroy()
+    {
+        SavingSystem.buttonSize = buttonsSize;
+        SavingSystem.hardness = hardness;
+        SavingSystem.moveImpulse = moveImpulse;
+        SavingSystem.showShadows = showShadows;
+    }
+    public void Reload()
+    {
+        buttonsSizeSlider.value = SavingSystem.buttonSize.x;
+        SetButtonsSize();
+
+        hardnessSlider.value = SavingSystem.hardness;
+        SetHardness();
+
+        moveImpulseToggle.isOn = SavingSystem.moveImpulse;
+        SetMovementMode();
+
+        showShadowsToggle.isOn = SavingSystem.showShadows;
+        SetShadows();
     }
 }

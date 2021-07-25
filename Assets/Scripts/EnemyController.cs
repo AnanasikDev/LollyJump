@@ -46,13 +46,13 @@ public class EnemyController : MonoBehaviour
     }
     void PlayCollisionParticles()
     {
-        collisionParticles.transform.parent = null;
+        collisionParticles.transform.parent = transform.parent;
         collisionParticles.Play();
         Destroy(collisionParticles, 4);
     }
     void PlayDeathParticles()
     {
-        deathParticles.transform.parent = null;
+        deathParticles.transform.parent = transform.parent;
         deathParticles.Play();
         Destroy(deathParticles, 4);
     }

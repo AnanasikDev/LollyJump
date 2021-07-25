@@ -22,8 +22,6 @@ public class ScoreController : MonoBehaviour
 
             if (_score > 0) // Do not play on awake 
                 PlayAdditionEffect();
-            else
-                PlayRestartEffect();
         }
     }
     public TextMeshProUGUI text;
@@ -32,10 +30,10 @@ public class ScoreController : MonoBehaviour
     void Awake() => instance = this;
     private void Start()
     {
-        score = LastScoreHandler.lastScore;
+        score = SavingSystem.lastScore;
         anim = text.GetComponent<Animator>();
     }
-    void PlayAdditionEffect()
+    public void PlayAdditionEffect()
     {
         foreach (ParticleSystem particleSystem in AdditionEffectParticles)
         {
@@ -46,7 +44,7 @@ public class ScoreController : MonoBehaviour
         anim = text.GetComponent<Animator>();
         anim.SetTrigger("Add");
     }
-    void PlayRestartEffect()
+    public void PlayRestartEffect()
     {
         foreach (ParticleSystem particleSystem in RestartEffectParticles)
         {
