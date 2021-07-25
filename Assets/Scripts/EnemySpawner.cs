@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     public EnemyController[] enemies;
-    public List<EnemyController> spawnedEnemies = new List<EnemyController>();
     public Transform min;
     public Transform max;
     public Transform y;
@@ -56,7 +55,6 @@ public class EnemySpawner : MonoBehaviour
                                     new Vector2(Random.Range(min.position.x, max.position.x),
                                     Random.Range(y.position.y - 0.3f, y.position.y + 0.3f)), Quaternion.identity);
             }
-            spawnedEnemies.Add(enemy);
         }
         yield return tick;
         yield return Spawn();

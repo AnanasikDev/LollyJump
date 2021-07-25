@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     public bool MoveImpulse = true;
 
+    [SerializeField] ParticleSystem JumpParticles;
+
     public static PlayerController instance { get; private set; }
     private void Awake() => instance = this;
     public void Start()
@@ -30,6 +32,9 @@ public class PlayerController : MonoBehaviour
             {
                 rb.AddForce(Vector2.up * velocity.y * jumpspeed);
                 velocity.y = 0;
+
+                JumpParticles.transform.localEulerAngles = new Vector3(90, 90, 0);
+                JumpParticles.Play();
             }
         }
     }

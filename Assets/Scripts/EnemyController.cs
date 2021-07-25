@@ -5,6 +5,9 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     public int Hp;
     public bool isClone = false;
+
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem collisionParticles;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,11 +24,15 @@ public class EnemyController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Ball") && other.gameObject.layer != 10)
         {
+            PlayCollisionParticles();
             Hp--;
+            if (other.gameObject.CompareTag("Floor"))
+            {
+                ScoreController.instance.score++;
+            }
             if (Hp <= 0)
             {
-                EnemySpawner.instance.spawnedEnemies.Remove(this);
-                Destroy(gameObject);
+                Die();
                 return;
             }
             transform.localScale /= 1.5f;
@@ -35,12 +42,23 @@ public class EnemyController : MonoBehaviour
             copy.GetComponent<EnemyController>().isClone = true;
             
             rb.AddForce(new Vector2(Random.Range(-1, 1) * 2, Random.Range(0, 1)) * 50);
-
-            if (other.gameObject.CompareTag("Floor"))
-            {
-                ScoreController.instance.score++;
-            }
         }
     }
-
+    void PlayCollisionParticles()
+    {
+        collisionParticles.transform.parent = null;
+        collisionParticles.Play();
+        Destroy(collisionParticles, 4);
+    }
+    void PlayDeathParticles()
+    {
+        deathParticles.transform.parent = null;
+        deathParticles.Play();
+        Destroy(deathParticles, 4);
+    }
+    void Die()
+    {
+        PlayDeathParticles();
+        Destroy(gameObject);
+    }
 }

@@ -11,7 +11,7 @@ public class GameStateController : MonoBehaviour
         Time.timeScale = 1;
 
         ScoreController.instance.score = 0;
-
+        LastScoreHandler.lastScore = 0;
     }
     public static void ExitGame()
     {

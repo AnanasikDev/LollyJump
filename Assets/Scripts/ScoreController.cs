@@ -3,6 +3,10 @@ using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
+
+    [SerializeField] ParticleSystem addParticles1;
+    [SerializeField] ParticleSystem addParticles2;
+
     int _score = 0;
     public int score
     {
@@ -15,7 +19,8 @@ public class ScoreController : MonoBehaviour
             _score = value;
             text.text = _score.ToString();
 
-            print(value);
+            if (_score > 0) // Do not play on awake 
+                AddEffect();
         }
     }
     public TextMeshProUGUI text;
@@ -25,5 +30,10 @@ public class ScoreController : MonoBehaviour
     private void Start()
     {
         score = LastScoreHandler.lastScore;
+    }
+    void AddEffect()
+    {
+        addParticles1.Play();
+        addParticles2.Play();
     }
 }
