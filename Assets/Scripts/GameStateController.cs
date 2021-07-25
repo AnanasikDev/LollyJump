@@ -4,6 +4,10 @@ public class GameStateController : MonoBehaviour
 {
 
     public static State gameState = State.Freezed;
+    private void Start()
+    {
+        Time.timeScale = 0;
+    }
     public static void EnterGame()
     {
         gameState = State.Playing;
