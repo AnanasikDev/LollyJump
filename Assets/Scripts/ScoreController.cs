@@ -4,8 +4,9 @@ using TMPro;
 public class ScoreController : MonoBehaviour
 {
 
-    [SerializeField] ParticleSystem addParticles1;
-    [SerializeField] ParticleSystem addParticles2;
+    [SerializeField] ParticleSystem[] AdditionEffectParticles;
+    [SerializeField] ParticleSystem[] RestartEffectParticles;
+    Animator anim;
 
     int _score = 0;
     public int score
@@ -20,7 +21,9 @@ public class ScoreController : MonoBehaviour
             text.text = _score.ToString();
 
             if (_score > 0) // Do not play on awake 
-                AddEffect();
+                PlayAdditionEffect();
+            else
+                PlayRestartEffect();
         }
     }
     public TextMeshProUGUI text;
@@ -30,10 +33,26 @@ public class ScoreController : MonoBehaviour
     private void Start()
     {
         score = LastScoreHandler.lastScore;
+        anim = text.GetComponent<Animator>();
     }
-    void AddEffect()
+    void PlayAdditionEffect()
     {
-        addParticles1.Play();
-        addParticles2.Play();
+        foreach (ParticleSystem particleSystem in AdditionEffectParticles)
+        {
+            ParticleSystem particles = Instantiate(particleSystem, transform);
+            particles.Play();
+            Destroy(particles, 3);
+        }
+        anim = text.GetComponent<Animator>();
+        anim.SetTrigger("Add");
+    }
+    void PlayRestartEffect()
+    {
+        foreach (ParticleSystem particleSystem in RestartEffectParticles)
+        {
+            ParticleSystem particles = Instantiate(particleSystem, transform);
+            particles.Play();
+            Destroy(particles, 3);
+        }
     }
 }

@@ -2,11 +2,11 @@
 using UnityEngine.SceneManagement;
 public class GameStateController : MonoBehaviour
 {
-
     public static State gameState = State.Freezed;
     private void Start()
     {
         Time.timeScale = 0;
+        gameState = State.Freezed;
     }
     public static void EnterGame()
     {

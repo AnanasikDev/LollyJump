@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     public bool PreShow = false;
     public GameObject BallShadow;
     public Transform ShadowsHandler;
+
+    [SerializeField] Transform enemiesHandler;
     public static EnemySpawner instance { get; private set; }
     short GetRandomAmount()
     {
@@ -42,7 +44,8 @@ public class EnemySpawner : MonoBehaviour
                 enemy = Instantiate(
                                     enemies[Random.Range(0, enemies.Length)],
                                     new Vector2(Random.Range(min.position.x, max.position.x),
-                                    Random.Range(y.position.y - 0.3f, y.position.y + 0.3f)), Quaternion.identity);
+                                    Random.Range(y.position.y - 0.3f, y.position.y + 0.3f)), Quaternion.identity,
+                                    enemiesHandler);
                 enemy.gameObject.SetActive(false);
                 GameObject shadow = Instantiate(BallShadow, new Vector3(enemy.transform.position.x, 5.1f), Quaternion.identity, ShadowsHandler);
                 Destroy(shadow, 1);
@@ -53,7 +56,8 @@ public class EnemySpawner : MonoBehaviour
                 enemy = Instantiate(
                                     enemies[Random.Range(0, enemies.Length)],
                                     new Vector2(Random.Range(min.position.x, max.position.x),
-                                    Random.Range(y.position.y - 0.3f, y.position.y + 0.3f)), Quaternion.identity);
+                                    Random.Range(y.position.y - 0.3f, y.position.y + 0.3f)), Quaternion.identity,
+                                    enemiesHandler);
             }
         }
         yield return tick;

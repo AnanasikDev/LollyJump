@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         {
             if (MoveImpulse) rb.AddForce(Vector2.right * velocity.x * speed);
             else rb.velocity = new Vector2(velocity.x * speed, rb.velocity.y);
+            
             if (velocity.y != 0)
             {
                 rb.AddForce(Vector2.up * velocity.y * jumpspeed);
