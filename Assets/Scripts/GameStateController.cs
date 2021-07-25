@@ -7,6 +7,8 @@ public class GameStateController : MonoBehaviour
     {
         Time.timeScale = 0;
         gameState = State.Freezed;
+
+        gameState = SavingSystem.state;
     }
     public static void EnterGame()
     {
@@ -30,6 +32,7 @@ public class GameStateController : MonoBehaviour
     public static void ReloadScene()
     {
         SavingSystem.lastScore = ScoreController.instance.score;
+        SavingSystem.state = gameState;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public enum State

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     public EnemyController[] enemies;

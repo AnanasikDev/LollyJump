@@ -13,6 +13,12 @@ public class InputController : MonoBehaviour
             }
             PlayerController.instance.velocity.x = Input.GetAxisRaw("Horizontal");
             PlayerController.instance.velocity.y = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) ? 1 : 0;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (Settings.instance.opened) Settings.instance.CloseSettings();
+                else Settings.instance.OpenSettings();
+            }
         }
         else
         {

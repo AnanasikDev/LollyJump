@@ -9,5 +9,7 @@ public static class SavingSystem
     public static bool moveImpulse = true;
     public static bool showShadows = false;
 
-    public static bool opened = false;
+    public static bool settingsOpened = false;
+
+    public static GameStateController.State state = GameStateController.State.Freezed;
 }

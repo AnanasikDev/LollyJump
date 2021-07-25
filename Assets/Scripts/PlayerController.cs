@@ -21,13 +21,21 @@ public class PlayerController : MonoBehaviour
         origin = transform.position;
         rb = GetComponent<Rigidbody2D>();
         Respawn();
-    } 
+    }
+    public void SetJumpVelocity()
+    {
+        velocity.y = 1;
+    }
+    public void SetMovementVelocity(float x)
+    {
+        velocity.x = x;
+    }
     void Update()
     {
         if (GameStateController.gameState == GameStateController.State.Playing)
         {
             if (MoveImpulse) rb.AddForce(Vector2.right * velocity.x * speed);
-            else rb.velocity = new Vector2(velocity.x * speed, rb.velocity.y);
+            else rb.velocity = new Vector2(velocity.x * speed * 1.75f, rb.velocity.y);
             
             if (velocity.y != 0)
             {
