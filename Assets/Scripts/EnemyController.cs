@@ -28,6 +28,11 @@ public class EnemyController : MonoBehaviour
 
         transform.localScale = new Vector3(size, size, 1);
         spriteRenderer.color = settings.color;
+        collisionParticles.startColor = settings.color;
+        deathParticles.startColor = settings.color;
+
+        ParticleSystem.TrailModule trails = deathParticles.trails;
+        trails.colorOverLifetime = new ParticleSystem.MinMaxGradient(settings.color);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
