@@ -8,7 +8,7 @@ public class EnemyData : ScriptableObject
     [Tooltip("How high it will bounce")]
     public float bounciness;
     
-    [Tooltip("How unpredictable is the direction whereat it bounces")][Range(0f, 2f)]
+    [Tooltip("How unpredictable is the direction whereat it bounces")][Range(0f, 4f)]
     public float unpredictability;
     
     [Tooltip("How many balls it will produce after death")]

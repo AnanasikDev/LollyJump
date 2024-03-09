@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
             }
             min += model.frequency;
         }
-        Debug.LogError("Unable to choose ball model");
+        Debug.LogError("Unable to choose ball model. Default is chosen");
         return null;
     }
     public IEnumerator Spawn()
@@ -75,8 +75,10 @@ public class EnemySpawner : MonoBehaviour
                                     enemiesHandler);
 
                 enemy.gameObject.SetActive(false);
-                GameObject shadow = Instantiate(warning, new Vector3(enemy.transform.position.x, 5.1f), Quaternion.identity, warningsHandler);
-                Destroy(shadow, warningDurationSeconds);
+                GameObject warningObject = Instantiate(warning);
+                warningObject.transform.SetParent(warningsHandler);
+                warningObject.transform.localPosition = new Vector3(enemy.transform.position.x, 0, 0);
+                Destroy(warningObject, warningDurationSeconds);
                 StartCoroutine(Show(enemy.gameObject));
             }
             else

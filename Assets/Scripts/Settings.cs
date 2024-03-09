@@ -160,7 +160,7 @@ public class Settings : MonoBehaviour
         SetMovementMode();
 
         currentPlatformSettings.showShadowsToggle.isOn = SavingSystem.showShadows;
-        SetShadows();
+        //SetShadows();
     }
 }
 

@@ -17,4 +17,4 @@ MonoBehaviour:
   unpredictability: 0.2
   inheritance: 2
   maxLives: 1
-  frequency: 0.2
+  frequency: 0.3

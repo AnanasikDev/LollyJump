@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4aacc82c86dc67d47a7a2473383fa4c3, type: 3}
-  m_Name: EnemyBall_2
+  m_Name: EnemyBall_3
   m_EditorClassIdentifier: 
-  color: {r: 0.3535521, g: 0.690566, b: 0.29055887, a: 1}
-  bounciness: 120
-  unpredictability: 2
-  inheritance: 3
-  maxLives: 2
-  frequency: 0.6
+  color: {r: 0.372549, g: 0.3820201, b: 0.87058824, a: 1}
+  bounciness: 145
+  unpredictability: 3.5
+  inheritance: 1
+  maxLives: 3
+  frequency: 0.1
