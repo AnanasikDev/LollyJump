@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D rigidbody2d;
     private Vector3 origin;
 
     public Vector2 velocity;
     public float speed;
     public float jumpspeed;
-    public bool j;
+    //public bool j;
 
     public bool MoveImpulse = true;
 
-    [SerializeField] ParticleSystem JumpParticles;
+    [SerializeField] ParticleSystem jumpParticles;
 
     public static PlayerController instance { get; private set; }
     private void Awake() => instance = this;
     public void Start()
     {
         origin = transform.position;
-        rb = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        jumpParticles.transform.localEulerAngles = new Vector3(90, 90, 0);
         Respawn();
     }
     public void SetJumpVelocity()
@@ -34,16 +36,15 @@ public class PlayerController : MonoBehaviour
     {
         if (GameStateController.gameState == GameStateController.State.Playing)
         {
-            if (MoveImpulse) rb.AddForce(Vector2.right * velocity.x * speed);
-            else rb.velocity = new Vector2(velocity.x * speed * 1.75f, rb.velocity.y);
+            if (MoveImpulse) rigidbody2d.AddForce(Vector2.right * velocity.x * speed);
+            else rigidbody2d.velocity = new Vector2(velocity.x * speed * 1.75f, rigidbody2d.velocity.y);
             
             if (velocity.y != 0)
             {
-                rb.AddForce(Vector2.up * velocity.y * jumpspeed);
+                rigidbody2d.AddForce(Vector2.up * velocity.y * jumpspeed);
                 velocity.y = 0;
 
-                JumpParticles.transform.localEulerAngles = new Vector3(90, 90, 0);
-                JumpParticles.Play();
+                jumpParticles.Play();
             }
         }
     }

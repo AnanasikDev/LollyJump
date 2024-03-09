@@ -6,33 +6,20 @@ public class ScoreController : MonoBehaviour
 
     [SerializeField] ParticleSystem[] AdditionEffectParticles;
     [SerializeField] ParticleSystem[] RestartEffectParticles;
-    Animator anim;
+    private Animator anim;
 
-    int _score = 0;
-    public int score
-    {
-        get
-        {
-            return _score;
-        }
-        set
-        {
-            _score = value;
-            text.text = _score.ToString();
-
-            if (_score > 0) // Do not play on awake 
-                PlayAdditionEffect();
-        }
-    }
+    public int score { get; private set; }
     public TextMeshProUGUI text;
 
     public static ScoreController instance { get; private set; }
     void Awake() => instance = this;
+
     private void Start()
     {
         score = SavingSystem.lastScore;
         anim = text.GetComponent<Animator>();
     }
+
     public void PlayAdditionEffect()
     {
         foreach (ParticleSystem particleSystem in AdditionEffectParticles)
@@ -53,4 +40,14 @@ public class ScoreController : MonoBehaviour
             Destroy(particles, 3);
         }
     }
+
+    public void SetScore(int n)
+    {
+        score = n;
+        text.text = score.ToString();
+
+        if (score > 0) // Do not play on awake
+            PlayAdditionEffect();
+    }
+    public void IncreaseScore(int n) => SetScore(score + n);
 }

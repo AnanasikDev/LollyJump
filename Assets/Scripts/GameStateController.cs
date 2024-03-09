@@ -16,7 +16,7 @@ public class GameStateController : MonoBehaviour
 
         Time.timeScale = 1;
 
-        ScoreController.instance.score = 0;
+        ScoreController.instance.SetScore(0);
         SavingSystem.lastScore = 0;
 
         ScoreController.instance.PlayRestartEffect();

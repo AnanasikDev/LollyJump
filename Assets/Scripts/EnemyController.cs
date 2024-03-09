@@ -2,62 +2,67 @@
 
 public class EnemyController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public int Hp;
-    public bool isClone = false;
+    private Rigidbody2D rigidbody2d;
+    private SpriteRenderer spriteRenderer;
+
+    [Tooltip("Number of lives (divisions) left")] public int livesLeft;
+    [Tooltip("Number of balls to be spawned when hit the ground")] public int childrenNumber;
 
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem collisionParticles;
-    private void Start()
+
+    EnemySettings settings;
+
+    public void Init(EnemySettings settings, int size, int childrenN)
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        this.settings = settings;
+        this.childrenNumber = childrenN;
 
-        if (transform.localScale.x > 0.6f / 4f)
-            Hp = Random.Range(1, 3);
+        spriteRenderer.color = settings.color;
 
-        if (!isClone)
-        {
-            transform.localScale *= Hp;
-        }
+        livesLeft = size;
+        transform.localScale = new Vector3(size, size, 1);
     }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!other.gameObject.CompareTag("Ball") && other.gameObject.layer != 10)
         {
-            PlayCollisionParticles();
-            Hp--;
             if (other.gameObject.CompareTag("Floor"))
             {
-                ScoreController.instance.score++;
+                ScoreController.instance.IncreaseScore(1);
             }
-            if (Hp <= 0)
-            {
-                Die();
-                return;
-            }
-            transform.localScale /= 1.5f;
-            GameObject copy = Instantiate(gameObject,
-                transform.position + new Vector3(Random.Range(-1, 1), 0.5f, 0), transform.rotation);
-            copy.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Random.Range(5, 7));
-            copy.GetComponent<EnemyController>().isClone = true;
-            
-            rb.AddForce(new Vector2(Random.Range(-1, 1) * 2, Random.Range(0, 1)) * 50);
+            Die();
         }
     }
     void PlayCollisionParticles()
     {
-        collisionParticles.transform.parent = transform.parent;
+        collisionParticles.transform.parent = null;
         collisionParticles.Play();
         Destroy(collisionParticles, 4);
     }
     void PlayDeathParticles()
     {
-        deathParticles.transform.parent = transform.parent;
+        deathParticles.transform.parent = null;
+        //deathParticles.transform.localEulerAngles = new Vector3(90, 0, 0);
         deathParticles.Play();
         Destroy(deathParticles, 4);
     }
-    void Die()
+    private void Die()
     {
+        if (livesLeft > 0)
+        {
+            for (int c = 0; c < childrenNumber; c++)
+            {
+                GameObject child = Instantiate(gameObject, transform.position + new Vector3((Random.value-0.5f)*2, Random.value), Quaternion.identity);
+                var enemyController = child.GetComponent<EnemyController>();
+                enemyController.Init(settings, livesLeft - 1, childrenNumber - 1);
+                Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1) * settings.bounciness;
+                enemyController.rigidbody2d.AddForce(force);
+            }
+        }
         PlayDeathParticles();
         Destroy(gameObject);
     }
