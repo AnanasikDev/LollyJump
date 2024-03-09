@@ -77,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7969a9195e217264aa27186c7ae315f8, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: a45d0afea1e392f48965af728f3d1847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7ba9b6c283ef4fb75164652003407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  isClone: 0
+  livesLeft: 0
+  childrenNumber: 0
   deathParticles: {fileID: 4410393121052171084}
   collisionParticles: {fileID: 860320893548846336}
 --- !u!1 &3778726170011797852

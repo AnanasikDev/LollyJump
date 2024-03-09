@@ -19,6 +19,15 @@ public class InputController : MonoBehaviour
                 if (Settings.instance.opened) Settings.instance.CloseSettings();
                 else Settings.instance.OpenSettings();
             }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Time.timeScale = 1 - Time.timeScale;
+                if (Time.timeScale == 0)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+            }
         }
         else
         {

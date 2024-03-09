@@ -722,7 +722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1085, y: 21}
+  m_AnchoredPosition: {x: 1085, y: 21.00003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &122740614
@@ -7467,7 +7467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 14, y: 21}
+  m_AnchoredPosition: {x: 14, y: 21.00003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &601580591
@@ -7929,7 +7929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 180.375, y: 97.00003}
+  m_AnchoredPosition: {x: 180.375, y: 97}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &704756910
@@ -13395,7 +13395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -119.37488, y: 97.000015}
+  m_AnchoredPosition: {x: -119.37488, y: 97}
   m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &864604537
@@ -13535,7 +13535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 873836368}
   m_Layer: 0
-  m_Name: Shadows
+  m_Name: Warnings Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16284,20 +16284,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb5f15cf6aea4a42b348d92050b6fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 4653586079285212733, guid: 2067a0594e400ed41890ee4e6043f294, type: 3}
-  - {fileID: 6550383897160719338, guid: 17d5a7e35ced5fd45abc229448304141, type: 3}
-  - {fileID: 5200967733291533279, guid: 6a0e8f36d54d984419177fac14039d76, type: 3}
-  - {fileID: 651826591376947085, guid: b14e21531e141a3429d8dbd5d56bc75a, type: 3}
-  - {fileID: 6214889253292921203, guid: bb17f076e993ca04c873b08e0e01ee27, type: 3}
-  min: {fileID: 584938110}
-  max: {fileID: 111017217}
-  y: {fileID: 1368428608}
-  time: 1
-  PreShow: 1
-  BallShadow: {fileID: 4140018168209046133, guid: a43549efac2d948449ca99eb0eafcf39,
+  enemiesData:
+  - {fileID: 11400000, guid: f93aa2ba371c03944a1981c565e98028, type: 2}
+  - {fileID: 11400000, guid: 9074835bedaafa14cbde19c269048f24, type: 2}
+  enemyControllerPrefab: {fileID: 4653586079285212733, guid: 2067a0594e400ed41890ee4e6043f294,
     type: 3}
-  ShadowsHandler: {fileID: 873836368}
+  leftBarrier: {fileID: 736170023}
+  rightBarrier: {fileID: 248107740}
+  heightOfSpawn: {fileID: 1368428608}
+  tick: 1
+  warn: 0
+  warning: {fileID: 4140018168209046133, guid: a43549efac2d948449ca99eb0eafcf39, type: 3}
+  warningsHandler: {fileID: 873836368}
+  warningDurationSeconds: 1
+  quantityDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 10.657202
+      outSlope: 10.657202
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.072090395
+    - serializedVersion: 3
+      time: 0.50827396
+      value: 3
+      inSlope: -0.1448461
+      outSlope: -0.1448461
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.59603477
+    - serializedVersion: 3
+      time: 1
+      value: 5
+      inSlope: 12.5852995
+      outSlope: 12.5852995
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07094977
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sizeDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0.8334148
+      outSlope: 0.8334148
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.09598438
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.3
+      inSlope: 0.017731238
+      outSlope: 0.017731238
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24082226
+      outWeight: 0.0911808
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 1.5254436
+      outSlope: 1.5254436
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04324472
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  tickDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   enemiesHandler: {fileID: 613221153}
 --- !u!1 &1577922230
 GameObject:

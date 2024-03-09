@@ -126,7 +126,7 @@ public class Settings : MonoBehaviour
     public void SetHardness()
     {
         hardness = currentPlatformSettings.hardnessSlider.value;
-        EnemySpawner.instance.SetTick(1 / hardness);
+        //EnemySpawner.instance.SetTick(1 / hardness);
     }
     public void SetMovementMode()
     {
@@ -136,7 +136,7 @@ public class Settings : MonoBehaviour
     public void SetShadows()
     {
         showShadows = currentPlatformSettings.showShadowsToggle.isOn;
-        EnemySpawner.instance.PreShow = showShadows;
+        EnemySpawner.instance.warn = showShadows;
     }
     private void OnDestroy()
     {

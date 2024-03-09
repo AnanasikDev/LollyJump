@@ -11,19 +11,23 @@ public class EnemyController : MonoBehaviour
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem collisionParticles;
 
-    EnemySettings settings;
+    EnemyData settings;
 
-    public void Init(EnemySettings settings, int size, int childrenN)
+    public void Init(EnemyData settings, float size, int livesLeft=-100, int childrenN=-1)
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         this.settings = settings;
-        this.childrenNumber = childrenN;
+        if (childrenN == -1) this.childrenNumber = settings.inheritance;
+        else this.childrenNumber = childrenN;
 
         spriteRenderer.color = settings.color;
 
-        livesLeft = size;
+        if (livesLeft == -100) this.livesLeft = settings.maxLives;
+        else this.livesLeft = livesLeft;
+
         transform.localScale = new Vector3(size, size, 1);
+        spriteRenderer.color = settings.color;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -58,12 +62,14 @@ public class EnemyController : MonoBehaviour
             {
                 GameObject child = Instantiate(gameObject, transform.position + new Vector3((Random.value-0.5f)*2, Random.value), Quaternion.identity);
                 var enemyController = child.GetComponent<EnemyController>();
-                enemyController.Init(settings, livesLeft - 1, childrenNumber - 1);
+                enemyController.Init(settings, transform.localScale.x / 1.5f, livesLeft - 1, childrenNumber - 1);
                 Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1) * settings.bounciness;
                 enemyController.rigidbody2d.AddForce(force);
             }
+            transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y / 1.5f);
         }
         PlayDeathParticles();
         Destroy(gameObject);
+        Destroy(this);
     }
 }
