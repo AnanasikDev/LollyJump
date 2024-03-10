@@ -61,12 +61,12 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         GameStateController.ExitGame();
-        //GameStateController.ReloadScene();
+        GameStateController.ReloadScene();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         GameStateController.ExitGame();
-        //GameStateController.ReloadScene();
+        GameStateController.ReloadScene();
     }
     public void Respawn()
     {

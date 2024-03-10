@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public EnemyData[] enemiesData;
     [HideInInspector] public List<GameObject> entities;
+    private List<GameObject> warningsPool;
 
     [SerializeField] private EnemyController enemyControllerPrefab;
     public Transform leftBarrier;
@@ -27,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         instance = this;
+        warningsPool = new List<GameObject>();
         StartCoroutine(Spawn());
 
         //Settings.instance.Reload();
@@ -79,10 +82,22 @@ public class EnemySpawner : MonoBehaviour
                                         enemiesHandler);
 
                     enemy.gameObject.SetActive(false);
-                    GameObject warningObject = Instantiate(warning);
-                    warningObject.transform.SetParent(warningsHandler);
+
+                    GameObject warningObject;
+
+                    // There is a cached object
+                    if (warningsPool.Any(w => !w.activeSelf))
+                    {
+                        warningObject = warningsPool.First(w => !w.activeSelf);
+                    }
+                    else
+                    {
+                        warningObject = Instantiate(warning);
+                        warningObject.transform.SetParent(warningsHandler);
+                        warningsPool.Add(warningObject);
+                    }
+                    warningObject.SetActive(true);
                     warningObject.transform.localPosition = new Vector3(enemy.transform.position.x, 0, 0);
-                    entities.Add(warningObject);
                     StartCoroutine(ExposeWarning(warning.gameObject, enemy.gameObject));
                 }
                 else
@@ -103,9 +118,8 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator ExposeWarning(GameObject warning, GameObject ball)
     {
         yield return new WaitForSeconds(warningDurationSeconds);
-        entities.Remove(warning);
-        Destroy(warning);
-        ball.SetActive(true);
+        if (ball) ball.SetActive(true);
+        if (warning) warning.SetActive(false);
     }
 
     public void DeleteAllEntities()
@@ -115,6 +129,10 @@ public class EnemySpawner : MonoBehaviour
             Destroy(entity.gameObject);
         }
         entities.Clear();
+        foreach (var warning in warningsPool)
+        {
+            warning.SetActive(false);
+        }
     }
     public void AddEntity(GameObject entity) => entities.Add(entity);
 }
