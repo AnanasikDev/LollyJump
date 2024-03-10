@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
@@ -54,10 +55,23 @@ public class EnemyController : MonoBehaviour
     }
     void PlayDeathParticles()
     {
+        EnemySpawner.instance.entities.Add(deathParticles.gameObject);
         deathParticles.transform.parent = null;
         //deathParticles.transform.localEulerAngles = new Vector3(90, 0, 0);
         deathParticles.Play();
-        Destroy(deathParticles, 4);
+        DestroyAndRemove(deathParticles.gameObject, 4);
+        
+    }
+    private void DestroyAndRemove(GameObject o, float time=0)
+    {
+        IEnumerator i()
+        {
+            if (time == 0) yield return null;
+            else yield return new WaitForSeconds(time);
+            Destroy(o);
+            EnemySpawner.instance.entities.Remove(o);
+        }
+        StartCoroutine(i());
     }
     private void Die()
     {
@@ -70,11 +84,11 @@ public class EnemyController : MonoBehaviour
                 enemyController.Init(settings, transform.localScale.x / 1.5f, livesLeft - 1, childrenNumber - 1);
                 Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1) * settings.bounciness;
                 enemyController.rigidbody2d.AddForce(force);
+                EnemySpawner.instance.AddEntity(child);
             }
             transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y / 1.5f);
         }
         PlayDeathParticles();
-        Destroy(gameObject);
-        Destroy(this);
+        DestroyAndRemove(gameObject);
     }
 }

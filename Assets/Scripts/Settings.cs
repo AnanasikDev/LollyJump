@@ -5,35 +5,29 @@ public class Settings : MonoBehaviour
 
     [Header("General")]
 
-    [SerializeField] GameObject PCEditionSettingsWindow;
-    [SerializeField] GameObject MobileEditionSettingsWindow;
+    [SerializeField] GameObject settingsWindow;
     
     [SerializeField] GameObject openSettingsButton;
+    [SerializeField] GameObject closeSettingsButton;
+    [SerializeField] GameObject exitButton;
 
-    [SerializeField] PlatformSettings[] platformSettings; // PC, Mobile
-    [SerializeField] PlatformSettings currentPlatformSettings;
+    [SerializeField] private Slider difficultySlider;
+    [SerializeField] private Slider buttonsSizeSlider;
 
-    public bool opened;
-    public static Settings instance { get; private set; }
-
-    [Header("Settings")]
+    [SerializeField] private Animator settingsAnimator;
 
     public Vector2 buttonsSize;
 
     [SerializeField] GameObject sideMovementButtons;
     [SerializeField] GameObject jumpButton;
 
-    public float hardness;
-    public bool moveImpulse;
-    public bool showShadows;
+    public float difficulty;
+    public static Settings instance { get; private set; }
 
     void Awake() => instance = this;
     private void Start()
     {
         buttonsSize = jumpButton.transform.localScale;
-
-        if (Application.isMobilePlatform) MobileEditionSettingsWindow.SetActive(false);
-        else PCEditionSettingsWindow.SetActive(false);
 
         if (Application.isMobilePlatform)
         {
@@ -46,67 +40,72 @@ public class Settings : MonoBehaviour
             sideMovementButtons.SetActive(false);
             jumpButton.SetActive(false);
             openSettingsButton.SetActive(false);
-        }
 
-        if (!Application.isMobilePlatform)
-        {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
-        if (SavingSystem.settingsOpened)
-        {
-            OpenSettings();
-        }
-
-        if (Application.isMobilePlatform)
-        {
-            currentPlatformSettings = platformSettings[1];
-        }
-        else
-        {
-            currentPlatformSettings = platformSettings[0];
-        }
-
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SavingSystem.settingsOpened = !SavingSystem.settingsOpened;
+            if (SavingSystem.settingsOpened) OpenSettings();
+            else CloseSettings();
+        }
+        Debug.Log(settingsAnimator.GetBool("Open"));
+    }
+
     public void OpenSettings()
     {
-        if (!SavingSystem.settingsOpened)
+        /*if (!SavingSystem.settingsOpened)
         {
             SavingSystem.settingsOpened = true;
-            GameStateController.ExitGame();
-            GameStateController.ReloadScene();
-            return;
+            //GameStateController.ExitGame();
+            //GameStateController.ReloadScene();
+            //return;
         }
 
         GameStateController.gameState = SavingSystem.state;
-        if (Application.isMobilePlatform) MobileEditionSettingsWindow.SetActive(true);
-        else PCEditionSettingsWindow.SetActive(true);
+        settingsWindow.SetActive(true);
 
+        */
+        GameStateController.StopGameSession();
+
+        GameStateController.gameState = GameStateController.State.Freezed;
         PlayerController.instance.gameObject.SetActive(false);
-        opened = true;
+        SavingSystem.settingsOpened = true;
+        Time.timeScale = 1;
 
         if (!Application.isMobilePlatform)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        Debug.Log("Animator initialized: " + settingsAnimator.isInitialized);
+
+        settingsAnimator.enabled = true;
+        settingsAnimator.SetBool("Open", true);
+        Debug.Log(settingsAnimator.GetBool("Open"));
     }
     public void CloseSettings()
     {
+        Debug.Log("Settings closed");
         SavingSystem.settingsOpened = false;
 
-        if (Application.isMobilePlatform) MobileEditionSettingsWindow.SetActive(false);
-        else PCEditionSettingsWindow.SetActive(false);
+        settingsWindow.SetActive(false);
 
         PlayerController.instance.gameObject.SetActive(true);
-        opened = false;
 
         if (!Application.isMobilePlatform)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+        //settingsAnimator.SetBool("Open", false);
     }
     public void Quit()
     {
@@ -119,57 +118,26 @@ public class Settings : MonoBehaviour
 
     public void SetButtonsSize()
     {
-        buttonsSize = new Vector2(currentPlatformSettings.buttonsSizeSlider.value, currentPlatformSettings.buttonsSizeSlider.value);
+        buttonsSize = new Vector2(buttonsSizeSlider.value, buttonsSizeSlider.value);
         jumpButton.transform.localScale = buttonsSize;
         sideMovementButtons.transform.localScale = buttonsSize;
     }         
     public void SetHardness()
     {
-        hardness = currentPlatformSettings.hardnessSlider.value;
+        difficulty = difficultySlider.value;
         //EnemySpawner.instance.SetTick(1 / hardness);
-    }
-    public void SetMovementMode()
-    {
-        moveImpulse = currentPlatformSettings.moveImpulseToggle.isOn;
-        PlayerController.instance.MoveImpulse = moveImpulse;
-    }
-    public void SetShadows()
-    {
-        showShadows = currentPlatformSettings.showShadowsToggle.isOn;
-        EnemySpawner.instance.warn = showShadows;
     }
     private void OnDestroy()
     {
         SavingSystem.buttonSize = buttonsSize;
-        SavingSystem.hardness = hardness;
-        SavingSystem.moveImpulse = moveImpulse;
-        SavingSystem.showShadows = showShadows;
+        SavingSystem.difficulty = difficulty;
     }
     public void Reload()
     {
-        if (currentPlatformSettings.platformName == "Mobile")
-        {
-            currentPlatformSettings.buttonsSizeSlider.value = SavingSystem.buttonSize.x;
-            SetButtonsSize();
-        }
+        buttonsSizeSlider.value = SavingSystem.buttonSize.x;
+        SetButtonsSize();
 
-        currentPlatformSettings.hardnessSlider.value = SavingSystem.hardness;
+        difficultySlider.value = SavingSystem.difficulty;
         SetHardness();
-
-        currentPlatformSettings.moveImpulseToggle.isOn = SavingSystem.moveImpulse;
-        SetMovementMode();
-
-        currentPlatformSettings.showShadowsToggle.isOn = SavingSystem.showShadows;
-        //SetShadows();
     }
-}
-
-[System.Serializable]
-public class PlatformSettings
-{
-    public string platformName;
-    public Slider buttonsSizeSlider;
-    public Slider hardnessSlider;
-    public Toggle moveImpulseToggle;
-    public Toggle showShadowsToggle;
 }

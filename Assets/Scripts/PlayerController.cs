@@ -21,9 +21,19 @@ public class PlayerController : MonoBehaviour
     {
         origin = transform.position;
         rigidbody2d = GetComponent<Rigidbody2D>();
+        Disactivate();
         jumpParticles.transform.localEulerAngles = new Vector3(90, 90, 0);
         Respawn();
     }
+    public void Activate()
+    {
+        rigidbody2d.simulated = true;
+    }
+    public void Disactivate()
+    {
+        rigidbody2d.simulated = false;
+    }
+
     public void SetJumpVelocity()
     {
         velocity.y = 1;
@@ -51,12 +61,12 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         GameStateController.ExitGame();
-        GameStateController.ReloadScene();
+        //GameStateController.ReloadScene();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         GameStateController.ExitGame();
-        GameStateController.ReloadScene();
+        //GameStateController.ReloadScene();
     }
     public void Respawn()
     {

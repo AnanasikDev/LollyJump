@@ -6,20 +6,16 @@ public class InputController : MonoBehaviour
     {
         if (!Application.isMobilePlatform)
         {
-            if (Input.anyKey && GameStateController.gameState == GameStateController.State.Freezed)
-            {
-                if (!Settings.instance.opened)
-                    GameStateController.EnterGame();
-            }
-            PlayerController.instance.velocity.x = Input.GetAxisRaw("Horizontal");
-            PlayerController.instance.velocity.y = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) ? 1 : 0;
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Settings.instance.opened) Settings.instance.CloseSettings();
+                if (SavingSystem.settingsOpened) Settings.instance.CloseSettings();
                 else Settings.instance.OpenSettings();
+
+                Debug.Log("Settings toggles to " + SavingSystem.settingsOpened);
+
+                return;
             }
-            if (Input.GetKeyDown(KeyCode.Tab))
+            else if (Input.GetKeyDown(KeyCode.Tab))
             {
                 Time.timeScale = 1 - Time.timeScale;
                 if (Time.timeScale == 0)
@@ -28,10 +24,22 @@ public class InputController : MonoBehaviour
                     Cursor.visible = true;
                 }
             }
+
+            else if (Input.anyKey && GameStateController.gameState == GameStateController.State.Freezed)
+            {
+                if (!SavingSystem.settingsOpened)
+                    GameStateController.EnterGame();
+            }
+
+            if (GameStateController.gameState == GameStateController.State.Playing)
+            {
+                PlayerController.instance.velocity.x = Input.GetAxisRaw("Horizontal");
+                PlayerController.instance.velocity.y = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) ? 1 : 0;
+            }
         }
         else
         {
-            if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed)
+            if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed && !SavingSystem.settingsOpened)
             {
                 GameStateController.EnterGame();
             }
