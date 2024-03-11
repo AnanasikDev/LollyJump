@@ -1,5 +1,8 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
+using System.Collections;
+
 public class Settings : MonoBehaviour
 {
 
@@ -11,15 +14,18 @@ public class Settings : MonoBehaviour
     [SerializeField] GameObject closeSettingsButton;
     [SerializeField] GameObject exitButton;
 
-    [SerializeField] private Slider difficultySlider;
-    [SerializeField] private Slider buttonsSizeSlider;
+    [SerializeField] Slider difficultySlider;
+    [SerializeField] Slider buttonsSizeSlider;
 
-    [SerializeField] private Animator settingsAnimator;
+    [SerializeField] Animator settingsAnimator;
 
     public Vector2 buttonsSize;
 
     [SerializeField] GameObject sideMovementButtons;
     [SerializeField] GameObject jumpButton;
+
+    [SerializeField] TextMeshProUGUI fpsText;
+    float fps;
 
     public float difficulty;
     public static Settings instance { get; private set; }
@@ -44,6 +50,8 @@ public class Settings : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+        Application.targetFrameRate = 80;
     }
 
     private void Update()
@@ -54,7 +62,8 @@ public class Settings : MonoBehaviour
             if (SavingSystem.settingsOpened) OpenSettings();
             else CloseSettings();
         }
-        Debug.Log(settingsAnimator.GetBool("Open"));
+        fps = Mathf.RoundToInt(1f / Time.deltaTime);
+        fpsText.text = $"FPS:{fps}";
     }
 
     public void OpenSettings()
@@ -76,6 +85,7 @@ public class Settings : MonoBehaviour
         GameStateController.gameState = GameStateController.State.Freezed;
         PlayerController.instance.gameObject.SetActive(false);
         SavingSystem.settingsOpened = true;
+        settingsWindow.SetActive(true);
         Time.timeScale = 1;
 
         if (!Application.isMobilePlatform)
@@ -93,11 +103,7 @@ public class Settings : MonoBehaviour
     public void CloseSettings()
     {
         Debug.Log("Settings closed");
-        SavingSystem.settingsOpened = false;
 
-        settingsWindow.SetActive(false);
-
-        PlayerController.instance.gameObject.SetActive(true);
 
         if (!Application.isMobilePlatform)
         {
@@ -105,7 +111,17 @@ public class Settings : MonoBehaviour
             Cursor.visible = false;
         }
 
-        //settingsAnimator.SetBool("Open", false);
+        settingsAnimator.SetBool("Open", false);
+        StartCoroutine(wait());
+
+        IEnumerator wait()
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            PlayerController.instance.gameObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(0.5f);
+            SavingSystem.settingsOpened = false;
+            settingsWindow.SetActive(false);
+        }
     }
     public void Quit()
     {
