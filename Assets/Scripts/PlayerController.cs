@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rigidbody2d;
     private Vector3 origin;
+
+    public bool isAlive = true;
 
     public Vector2 velocity;
     public float speed;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public void Activate()
     {
         rigidbody2d.simulated = true;
+        isAlive = true; 
     }
     public void Disactivate()
     {
@@ -60,13 +64,19 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        GameStateController.ExitGame();
-        GameStateController.ReloadScene();
+        Die();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GameStateController.ExitGame();
-        GameStateController.ReloadScene();
+        Die();
+    }
+
+    private void Die()
+    {
+        if (!isAlive) return;
+        isAlive = false;
+
+        GameStateController.instance.Die();
     }
     public void Respawn()
     {

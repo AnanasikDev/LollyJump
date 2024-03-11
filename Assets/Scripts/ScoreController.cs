@@ -16,7 +16,7 @@ public class ScoreController : MonoBehaviour
 
     private void Start()
     {
-        score = SavingSystem.lastScore;
+        SetScore(SavingSystem.lastScore);
         anim = text.GetComponent<Animator>();
     }
 
@@ -46,8 +46,8 @@ public class ScoreController : MonoBehaviour
         score = n;
         text.text = score.ToString();
 
-        if (score > 0) // Do not play on awake
-            PlayAdditionEffect();
+        //if (score > 0) // Do not play on awake
+        //    PlayAdditionEffect();
     }
     public void IncreaseScore(int n) => SetScore(score + n);
 }

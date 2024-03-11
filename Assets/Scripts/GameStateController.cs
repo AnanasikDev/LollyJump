@@ -1,11 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 public class GameStateController : MonoBehaviour
 {
     public static State gameState = State.Freezed;
+
+    public static GameStateController instance;
+    private new Camera camera;
+    private PostProcessProfile ppProfile;
+    private ColorGrading ppColorGrading;
+    private Grain ppGrain;
     private void Start()
     {
-        //Time.timeScale = 0;
+        camera = Camera.main;
+        ppProfile = camera.GetComponent<PostProcessVolume>().profile;
+        ppColorGrading = ppProfile.GetSetting<ColorGrading>();
+        ppGrain = ppProfile.GetSetting<Grain>();
+        instance = this;
         gameState = State.Freezed;
     }
 
@@ -48,6 +60,33 @@ public class GameStateController : MonoBehaviour
         SavingSystem.lastScore = ScoreController.instance.score;
         SavingSystem.state = gameState;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Die()
+    {
+        IEnumerator DeathShowcase()
+        {
+            ppGrain.active = true;
+            ppColorGrading.active = true;
+            float saturation = ppColorGrading.saturation;
+            Time.timeScale = 1;
+            for (int i = 0; i < 20; i++)
+            {
+                yield return new WaitForFixedUpdate();
+                //Time.timeScale = Mathf.Clamp01(Time.timeScale / 1.05f);
+                Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.03f);
+                ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/20f));
+            }
+            Time.timeScale = 0.25f;
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            ppGrain.active = false;
+            ppColorGrading.active = false;
+
+            GameStateController.ExitGame();
+            GameStateController.ReloadScene();
+        }
+        StartCoroutine(DeathShowcase());
     }
     public enum State
     {
