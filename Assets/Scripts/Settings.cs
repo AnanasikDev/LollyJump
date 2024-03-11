@@ -116,9 +116,9 @@ public class Settings : MonoBehaviour
 
         IEnumerator wait()
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(0.4f);
             PlayerController.instance.gameObject.SetActive(true);
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(0.6f);
             SavingSystem.settingsOpened = false;
             settingsWindow.SetActive(false);
         }
