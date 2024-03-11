@@ -80,6 +80,10 @@ public class Settings : MonoBehaviour
         settingsWindow.SetActive(true);
 
         */
+        
+        // To avoid unexpected bugs, prohibit opening settings whilst death animation is running
+        if (!PlayerController.instance.isAlive) return;
+
         GameStateController.StopGameSession();
 
         GameStateController.gameState = GameStateController.State.Freezed;
