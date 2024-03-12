@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Floor"))
             {
-                ScoreController.instance.IncreaseScore(1);
+                Environment.scoreController.IncreaseScore(1);
             }
             Die();
         }
@@ -59,7 +59,7 @@ public class EnemyController : MonoBehaviour
     }
     void PlayDeathParticles()
     {
-        EnemySpawner.instance.entities.Add(deathParticles.gameObject);
+        Environment.enemySpawner.entities.Add(deathParticles.gameObject);
         deathParticles.transform.parent = null;
         //deathParticles.transform.localEulerAngles = new Vector3(90, 0, 0);
         deathParticles.Play();
@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
             if (time == 0) yield return null;
             else yield return new WaitForSeconds(time);
             Destroy(o);
-            EnemySpawner.instance.entities.Remove(o);
+            Environment.enemySpawner.entities.Remove(o);
         }
         StartCoroutine(i());
     }
@@ -88,14 +88,14 @@ public class EnemyController : MonoBehaviour
                 enemyController.Init(settings, transform.localScale.x / 1.5f, livesLeft - 1, childrenNumber - 1);
                 Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1) * settings.bounciness;
                 enemyController.rigidbody2d.AddForce(force);
-                EnemySpawner.instance.AddEntity(child);
+                Environment.enemySpawner.AddEntity(child);
             }
             transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y / 1.5f);
         }
         //PlayerController.instance.audioSource.PlayOneShot(PlayerController.instance.audioSource.clip, Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f)*5f));
 
         float volume = Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f) * 5f);
-        AudioManager.instance.PlayClip(deathSound, volume);
+        Environment.audioManager.PlayClip(deathSound, volume);
         
         PlayDeathParticles();
         DestroyAndRemove(gameObject);

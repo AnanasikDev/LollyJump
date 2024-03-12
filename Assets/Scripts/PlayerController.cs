@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -20,9 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip deathSound;
 
-    public static PlayerController instance { get; private set; }
-    private void Awake() => instance = this;
-    public void Start()
+    public void Init()
     {
         origin = transform.position;
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -54,7 +51,7 @@ public class PlayerController : MonoBehaviour
         velocity.y = 0;
 
         jumpParticles.Play();
-        AudioManager.instance.PlayClip(jumpSound);
+        Environment.audioManager.PlayClip(jumpSound, 1.15f);
     }
     void Update()
     {
@@ -83,9 +80,9 @@ public class PlayerController : MonoBehaviour
         if (!isAlive) return;
         isAlive = false;
 
-        AudioManager.instance.PlayClip(deathSound);
+        Environment.audioManager.PlayClip(deathSound, 0.85f);
 
-        GameStateController.instance.Die();
+        Environment.gameStateController.Die();
     }
     public void Respawn()
     {

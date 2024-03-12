@@ -5575,9 +5575,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6485,6 +6485,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1186933690}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: SetButtonsSize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12103,6 +12115,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &974414711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12726,7 +12750,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.6150943, g: 0.6150943, b: 0.6150943, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -12746,7 +12770,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1322726284}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1322726284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13373,6 +13409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1565459787}
+  - component: {fileID: 1565459795}
   - component: {fileID: 1565459788}
   - component: {fileID: 1565459792}
   - component: {fileID: 1565459791}
@@ -13719,6 +13756,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652211966eefc6647b065889adca8f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1565459795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565459786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0132e13abe9344d8760d53bb21a9ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemySpawner: {fileID: 1565459788}
+  _scoreController: {fileID: 1565459789}
+  _inputController: {fileID: 1565459791}
+  _playerController: {fileID: 1886117213}
+  _settings: {fileID: 1565459792}
+  _audioManager: {fileID: 1565459794}
+  _gameStateController: {fileID: 1565459790}
 --- !u!1 &1577922230
 GameObject:
   m_ObjectHideFlags: 0
@@ -13755,7 +13811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 29.799988}
+  m_AnchoredPosition: {x: 0, y: 25.700012}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577922232
@@ -13814,6 +13870,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1577922233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13827,7 +13895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14751,6 +14819,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1186933690}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1565459791}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ButtonHaptic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19993,12 +20073,12 @@ PrefabInstance:
         type: 3}
       propertyPath: jumpSound
       value: 
-      objectReference: {fileID: 8300000, guid: 5ea2c66f14807e144be0de20f88b03de, type: 3}
+      objectReference: {fileID: 8300000, guid: bf366d8b74c01394b9d86576845ca45a, type: 3}
     - target: {fileID: 8719750881637466534, guid: aa91bc3cdfbd32944908c474c8f1ac5c,
         type: 3}
       propertyPath: deathSound
       value: 
-      objectReference: {fileID: 8300000, guid: 347d473aa32070a4c87f3b8ec38f957c, type: 3}
+      objectReference: {fileID: 8300000, guid: 2b2554fd36c705c4abebbc20e8813e45, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

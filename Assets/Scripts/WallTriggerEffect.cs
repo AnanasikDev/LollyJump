@@ -23,6 +23,6 @@ public class WallTriggerEffect : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SetEffect(PlayerController.instance.transform.position);
+        SetEffect(Environment.playerController.transform.position);
     }
 }

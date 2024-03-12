@@ -2,18 +2,15 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
-
     private AudioSource audioSource;
-    private void Start()
+    public void Init()
     {
-        instance = this;
         audioSource = GetComponent<AudioSource>();
     }
 
     public void PlayClip(AudioClip clip, float volume = 1f)
     {
-        audioSource.pitch = 1 + Random.Range(-0.125f, 0.125f);
+        audioSource.pitch = 1 + Random.Range(-0.075f, 0.075f);
         audioSource.PlayOneShot(clip, volume);
     }
 

@@ -28,10 +28,8 @@ public class Settings : MonoBehaviour
     float fps;
 
     public float difficulty;
-    public static Settings instance { get; private set; }
 
-    void Awake() => instance = this;
-    private void Start()
+    public void Init()
     {
         buttonsSize = jumpButton.transform.localScale.x;
 
@@ -69,12 +67,12 @@ public class Settings : MonoBehaviour
     public void OpenSettings()
     {
         // To avoid unexpected bugs, prohibit opening settings whilst death animation is running
-        if (!PlayerController.instance.isAlive) return;
+        if (!Environment.playerController.isAlive) return;
 
         GameStateController.StopGameSession();
 
         GameStateController.gameState = GameStateController.State.Freezed;
-        PlayerController.instance.gameObject.SetActive(false);
+        Environment.playerController.gameObject.SetActive(false);
         SavingSystem.settingsOpened = true;
         settingsWindow.SetActive(true);
         Time.timeScale = 1;
@@ -103,7 +101,7 @@ public class Settings : MonoBehaviour
         IEnumerator wait()
         {
             yield return new WaitForSecondsRealtime(0.4f);
-            PlayerController.instance.gameObject.SetActive(true);
+            Environment.playerController.gameObject.SetActive(true);
             yield return new WaitForSecondsRealtime(0.6f);
             SavingSystem.settingsOpened = false;
             settingsWindow.SetActive(false);

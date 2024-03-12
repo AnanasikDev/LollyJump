@@ -11,10 +11,7 @@ public class ScoreController : MonoBehaviour
     public int score { get; private set; }
     public TextMeshProUGUI text;
 
-    public static ScoreController instance { get; private set; }
-    void Awake() => instance = this;
-
-    private void Start()
+    public void Init()
     {
         SetScore(SavingSystem.lastScore);
         anim = text.GetComponent<Animator>();

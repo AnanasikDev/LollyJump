@@ -30,13 +30,11 @@ public class EnemySpawner : MonoBehaviour
 
     public AnimationCurve quantityDistribution;
     public AnimationCurve sizeDistribution;
-    private float quantityFactor { get { return quantityFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
-    private float frequencyFactor { get { return frequencyFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
+    private float quantityFactor { get { return quantityFactorOverTime.Evaluate(Environment.gameStateController.timeSinceSessionStart); } }
+    private float frequencyFactor { get { return frequencyFactorOverTime.Evaluate(Environment.gameStateController.timeSinceSessionStart); } }
 
-    public static EnemySpawner instance { get; private set; }
-    private void Start()
+    public void Init()
     {
-        instance = this;
         warningsPool = new List<GameObject>();
         StartCoroutine(Spawn());
     }

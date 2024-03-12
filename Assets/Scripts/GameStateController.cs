@@ -7,7 +7,6 @@ public class GameStateController : MonoBehaviour
 {
     public static State gameState = State.Freezed;
 
-    public static GameStateController instance;
     private new Camera camera;
     private PostProcessProfile ppProfile;
     private ColorGrading ppColorGrading;
@@ -16,13 +15,12 @@ public class GameStateController : MonoBehaviour
     public float timeSinceSessionStart { get { return Time.time - timeofstart; } }
     private float timeofstart;
 
-    private void Start()
+    public void Init()
     {
         camera = Camera.main;
         ppProfile = camera.GetComponent<PostProcessVolume>().profile;
         ppColorGrading = ppProfile.GetSetting<ColorGrading>();
         ppGrain = ppProfile.GetSetting<Grain>();
-        instance = this;
         gameState = State.Freezed;
     }
 
@@ -34,9 +32,9 @@ public class GameStateController : MonoBehaviour
     public static void StopGameSession()
     {
         gameState = State.Freezed;
-        PlayerController.instance.Respawn();
-        PlayerController.instance.Disactivate();
-        EnemySpawner.instance.DeleteAllEntities();
+        Environment.playerController.Respawn();
+        Environment.playerController.Disactivate();
+        Environment.enemySpawner.DeleteAllEntities();
     }
     public void EnterGame()
     {
@@ -45,22 +43,22 @@ public class GameStateController : MonoBehaviour
 
         Time.timeScale = 1;
 
-        ScoreController.instance.SetScore(0);
+        Environment.scoreController.SetScore(0);
         SavingSystem.lastScore = 0;
 
-        ScoreController.instance.PlayRestartEffect();
+        Environment.scoreController.PlayRestartEffect();
 
-        PlayerController.instance.Activate();
+        Environment.playerController.Activate();
     }
     public void ExitGame()
     {
         gameState = State.Freezed;
 
-        PlayerController.instance.Respawn();
+        Environment.playerController.Respawn();
     }
     public void ReloadScene()
     {
-        SavingSystem.lastScore = ScoreController.instance.score;
+        SavingSystem.lastScore = Environment.scoreController.score;
         SavingSystem.state = gameState;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -78,18 +76,17 @@ public class GameStateController : MonoBehaviour
                 yield return new WaitForFixedUpdate();
                 Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.03f);
                 ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/20f));
-                //AudioManager.instance.SetVolume(1 - 5f / i);
             }
             Time.timeScale = 0.25f;
             yield return new WaitForSecondsRealtime(0.5f);
-            AudioManager.instance.SetVolume(1);
+            Environment.audioManager.SetVolume(1);
 
             ppGrain.active = false;
             ppColorGrading.active = false;
 
             ExitGame();
             ReloadScene();
-            Settings.instance.Reload();
+            Environment.settings.Reload();
         }
         StartCoroutine(DeathShowcase());
     }

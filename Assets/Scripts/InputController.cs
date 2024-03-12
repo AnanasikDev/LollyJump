@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using CandyCoded.HapticFeedback;
 
 public class InputController : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (SavingSystem.settingsOpened) Settings.instance.CloseSettings();
-                else Settings.instance.OpenSettings();
+                if (SavingSystem.settingsOpened) Environment.settings.CloseSettings();
+                else Environment.settings.OpenSettings();
 
                 Debug.Log("Settings toggles to " + SavingSystem.settingsOpened);
 
@@ -28,21 +29,27 @@ public class InputController : MonoBehaviour
             else if (Input.anyKey && GameStateController.gameState == GameStateController.State.Freezed)
             {
                 if (!SavingSystem.settingsOpened)
-                    GameStateController.instance.EnterGame();
+                    Environment.gameStateController.EnterGame();
             }
 
             if (GameStateController.gameState == GameStateController.State.Playing)
             {
-                PlayerController.instance.velocity.x = Input.GetAxisRaw("Horizontal");
-                PlayerController.instance.velocity.y = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) ? 1 : 0;
+                Environment.playerController.velocity.x = Input.GetAxisRaw("Horizontal");
+                Environment.playerController.velocity.y = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) ? 1 : 0;
             }
         }
         else
         {
             if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed && !SavingSystem.settingsOpened)
             {
-                GameStateController.instance.EnterGame();
+                Environment.gameStateController.EnterGame();
             }
         }
+    }
+
+    public void ButtonHaptic()
+    {
+        HapticFeedback.LightFeedback();
+        //Handheld.Vibrate();
     }
 }
