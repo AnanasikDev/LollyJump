@@ -11,6 +11,10 @@ public class GameStateController : MonoBehaviour
     private PostProcessProfile ppProfile;
     private ColorGrading ppColorGrading;
     private Grain ppGrain;
+
+    public float timeSinceSessionStart { get { return Time.time - timeofstart; } }
+    private float timeofstart;
+
     private void Start()
     {
         camera = Camera.main;
@@ -33,8 +37,9 @@ public class GameStateController : MonoBehaviour
         PlayerController.instance.Disactivate();
         EnemySpawner.instance.DeleteAllEntities();
     }
-    public static void EnterGame()
+    public void EnterGame()
     {
+        timeofstart = Time.time;
         Debug.Log("Entering game");
         gameState = State.Playing;
 
@@ -47,7 +52,7 @@ public class GameStateController : MonoBehaviour
 
         PlayerController.instance.Activate();
     }
-    public static void ExitGame()
+    public void ExitGame()
     {
         gameState = State.Freezed;
 
@@ -55,7 +60,7 @@ public class GameStateController : MonoBehaviour
 
         PlayerController.instance.Respawn();
     }
-    public static void ReloadScene()
+    public void ReloadScene()
     {
         SavingSystem.lastScore = ScoreController.instance.score;
         SavingSystem.state = gameState;
@@ -83,8 +88,8 @@ public class GameStateController : MonoBehaviour
             ppGrain.active = false;
             ppColorGrading.active = false;
 
-            GameStateController.ExitGame();
-            GameStateController.ReloadScene();
+            ExitGame();
+            ReloadScene();
             Settings.instance.Reload();
         }
         StartCoroutine(DeathShowcase());

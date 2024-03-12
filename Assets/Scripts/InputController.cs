@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour
             else if (Input.anyKey && GameStateController.gameState == GameStateController.State.Freezed)
             {
                 if (!SavingSystem.settingsOpened)
-                    GameStateController.EnterGame();
+                    GameStateController.instance.EnterGame();
             }
 
             if (GameStateController.gameState == GameStateController.State.Playing)
@@ -41,7 +41,7 @@ public class InputController : MonoBehaviour
         {
             if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed && !SavingSystem.settingsOpened)
             {
-                GameStateController.EnterGame();
+                GameStateController.instance.EnterGame();
             }
         }
     }

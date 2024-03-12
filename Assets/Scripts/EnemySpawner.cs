@@ -24,6 +24,13 @@ public class EnemySpawner : MonoBehaviour
     public AnimationCurve sizeDistribution;
     public AnimationCurve tickDistribution;
 
+    [Header("Difficulty regulations")]
+
+    public AnimationCurve quantityFactorOverTime;
+    public AnimationCurve frequencyFactorOverTime;
+    private float quantityFactor { get { return quantityFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
+    private float frequencyFactor { get { return frequencyFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
+
     [SerializeField] Transform enemiesHandler;
     public static EnemySpawner instance { get; private set; }
     private void Start()
@@ -31,12 +38,10 @@ public class EnemySpawner : MonoBehaviour
         instance = this;
         warningsPool = new List<GameObject>();
         StartCoroutine(Spawn());
-
-        //Settings.instance.Reload();
     }
     private int CalculateQuantity()
     {
-        return Mathf.RoundToInt(quantityDistribution.Evaluate(Random.value));
+        return Mathf.RoundToInt(quantityDistribution.Evaluate(Random.value) * quantityFactor);
     }
     private float CalculateSize()
     {
@@ -112,7 +117,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(tick);
+        yield return new WaitForSeconds(tick * 1f/frequencyFactor);
         yield return Spawn();
     }
     public IEnumerator ExposeWarning(GameObject warning, GameObject ball)
