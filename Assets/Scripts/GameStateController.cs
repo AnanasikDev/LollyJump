@@ -85,6 +85,7 @@ public class GameStateController : MonoBehaviour
 
             GameStateController.ExitGame();
             GameStateController.ReloadScene();
+            Settings.instance.Reload();
         }
         StartCoroutine(DeathShowcase());
     }

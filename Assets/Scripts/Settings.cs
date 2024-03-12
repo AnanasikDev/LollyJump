@@ -19,7 +19,7 @@ public class Settings : MonoBehaviour
 
     [SerializeField] Animator settingsAnimator;
 
-    public Vector2 buttonsSize;
+    public float buttonsSize;
 
     [SerializeField] GameObject sideMovementButtons;
     [SerializeField] GameObject jumpButton;
@@ -33,7 +33,7 @@ public class Settings : MonoBehaviour
     void Awake() => instance = this;
     private void Start()
     {
-        buttonsSize = jumpButton.transform.localScale;
+        buttonsSize = jumpButton.transform.localScale.x;
 
         if (Application.isMobilePlatform)
         {
@@ -138,23 +138,19 @@ public class Settings : MonoBehaviour
 
     public void SetButtonsSize()
     {
-        buttonsSize = new Vector2(buttonsSizeSlider.value, buttonsSizeSlider.value);
-        jumpButton.transform.localScale = buttonsSize;
-        sideMovementButtons.transform.localScale = buttonsSize;
-    }         
+        buttonsSize = buttonsSizeSlider.value;
+        jumpButton.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
+        sideMovementButtons.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
+        SavingSystem.buttonSize = buttonsSize;
+    }
     public void SetHardness()
     {
         difficulty = difficultySlider.value;
         //EnemySpawner.instance.SetTick(1 / hardness);
     }
-    private void OnDestroy()
-    {
-        SavingSystem.buttonSize = buttonsSize;
-        SavingSystem.difficulty = difficulty;
-    }
     public void Reload()
     {
-        buttonsSizeSlider.value = SavingSystem.buttonSize.x;
+        buttonsSizeSlider.value = SavingSystem.buttonSize;
         SetButtonsSize();
 
         difficultySlider.value = SavingSystem.difficulty;
