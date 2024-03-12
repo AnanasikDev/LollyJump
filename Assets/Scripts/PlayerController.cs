@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public Vector2 velocity;
     public float speed;
     public float jumpspeed;
-    //public bool j;
 
     public bool MoveImpulse = true;
 

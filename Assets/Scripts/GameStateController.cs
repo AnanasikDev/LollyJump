@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
+
 public class GameStateController : MonoBehaviour
 {
     public static State gameState = State.Freezed;
@@ -40,7 +41,6 @@ public class GameStateController : MonoBehaviour
     public void EnterGame()
     {
         timeofstart = Time.time;
-        Debug.Log("Entering game");
         gameState = State.Playing;
 
         Time.timeScale = 1;
@@ -55,8 +55,6 @@ public class GameStateController : MonoBehaviour
     public void ExitGame()
     {
         gameState = State.Freezed;
-
-        //Time.timeScale = 0;
 
         PlayerController.instance.Respawn();
     }
@@ -78,7 +76,6 @@ public class GameStateController : MonoBehaviour
             for (int i = 0; i < 20; i++)
             {
                 yield return new WaitForFixedUpdate();
-                //Time.timeScale = Mathf.Clamp01(Time.timeScale / 1.05f);
                 Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.03f);
                 ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/20f));
             }

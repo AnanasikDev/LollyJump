@@ -68,19 +68,6 @@ public class Settings : MonoBehaviour
 
     public void OpenSettings()
     {
-        /*if (!SavingSystem.settingsOpened)
-        {
-            SavingSystem.settingsOpened = true;
-            //GameStateController.ExitGame();
-            //GameStateController.ReloadScene();
-            //return;
-        }
-
-        GameStateController.gameState = SavingSystem.state;
-        settingsWindow.SetActive(true);
-
-        */
-        
         // To avoid unexpected bugs, prohibit opening settings whilst death animation is running
         if (!PlayerController.instance.isAlive) return;
 
@@ -98,17 +85,11 @@ public class Settings : MonoBehaviour
             Cursor.visible = true;
         }
 
-        Debug.Log("Animator initialized: " + settingsAnimator.isInitialized);
-
         settingsAnimator.enabled = true;
         settingsAnimator.SetBool("Open", true);
-        Debug.Log(settingsAnimator.GetBool("Open"));
     }
     public void CloseSettings()
     {
-        Debug.Log("Settings closed");
-
-
         if (!Application.isMobilePlatform)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -118,6 +99,7 @@ public class Settings : MonoBehaviour
         settingsAnimator.SetBool("Open", false);
         StartCoroutine(wait());
 
+        // safe animation closure
         IEnumerator wait()
         {
             yield return new WaitForSecondsRealtime(0.4f);
@@ -143,17 +125,9 @@ public class Settings : MonoBehaviour
         sideMovementButtons.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
         SavingSystem.buttonSize = buttonsSize;
     }
-    public void SetHardness()
-    {
-        difficulty = difficultySlider.value;
-        //EnemySpawner.instance.SetTick(1 / hardness);
-    }
     public void Reload()
     {
         buttonsSizeSlider.value = SavingSystem.buttonSize;
         SetButtonsSize();
-
-        difficultySlider.value = SavingSystem.difficulty;
-        SetHardness();
     }
 }

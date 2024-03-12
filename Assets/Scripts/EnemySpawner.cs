@@ -20,18 +20,19 @@ public class EnemySpawner : MonoBehaviour
     public Transform warningsHandler;
     public float warningDurationSeconds = 1f;
 
-    public AnimationCurve quantityDistribution;
-    public AnimationCurve sizeDistribution;
-    public AnimationCurve tickDistribution;
+    [SerializeField] Transform enemiesHandler;
+
 
     [Header("Difficulty regulations")]
 
     public AnimationCurve quantityFactorOverTime;
     public AnimationCurve frequencyFactorOverTime;
+
+    public AnimationCurve quantityDistribution;
+    public AnimationCurve sizeDistribution;
     private float quantityFactor { get { return quantityFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
     private float frequencyFactor { get { return frequencyFactorOverTime.Evaluate(GameStateController.instance.timeSinceSessionStart); } }
 
-    [SerializeField] Transform enemiesHandler;
     public static EnemySpawner instance { get; private set; }
     private void Start()
     {
@@ -68,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
             min += model.frequency;
         }
         Debug.LogError("Unable to choose ball model. Default is chosen");
-        return null;
+        return enemiesData[0];
     }
     public IEnumerator Spawn()
     {
@@ -90,9 +91,9 @@ public class EnemySpawner : MonoBehaviour
 
                     GameObject warningObject;
 
-                    // There is a cached object
                     if (warningsPool.Any(w => !w.activeSelf))
                     {
+                        // There is a cached object, fetch it
                         warningObject = warningsPool.First(w => !w.activeSelf);
                     }
                     else
