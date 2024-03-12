@@ -12,12 +12,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem collisionParticles;
 
+    [SerializeField] AudioClip deathSound;
+
     EnemyData settings;
 
     public void Init(EnemyData settings, float size, int livesLeft=-100, int childrenN=-1)
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         this.settings = settings;
         if (childrenN == -1) this.childrenNumber = settings.inheritance;
         else this.childrenNumber = childrenN;
@@ -34,6 +37,7 @@ public class EnemyController : MonoBehaviour
 
         ParticleSystem.TrailModule trails = deathParticles.trails;
         trails.colorOverLifetime = new ParticleSystem.MinMaxGradient(settings.color);
+
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -88,6 +92,11 @@ public class EnemyController : MonoBehaviour
             }
             transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y / 1.5f);
         }
+        //PlayerController.instance.audioSource.PlayOneShot(PlayerController.instance.audioSource.clip, Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f)*5f));
+
+        float volume = Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f) * 5f);
+        AudioManager.instance.PlayClip(deathSound, volume);
+        
         PlayDeathParticles();
         DestroyAndRemove(gameObject);
     }

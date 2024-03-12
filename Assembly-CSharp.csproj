@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\CacheController.cs" />
     <Compile Include="Assets\Scripts\GameStateController.cs" />
     <Compile Include="Assets\Prefabs\EnemySettings.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

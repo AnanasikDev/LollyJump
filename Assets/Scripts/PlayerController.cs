@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ParticleSystem jumpParticles;
 
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip deathSound;
+
     public static PlayerController instance { get; private set; }
     private void Awake() => instance = this;
     public void Start()
@@ -45,6 +48,14 @@ public class PlayerController : MonoBehaviour
     {
         velocity.x = x;
     }
+    private void Jump()
+    {
+        rigidbody2d.AddForce(Vector2.up * velocity.y * jumpspeed);
+        velocity.y = 0;
+
+        jumpParticles.Play();
+        AudioManager.instance.PlayClip(jumpSound);
+    }
     void Update()
     {
         if (GameStateController.gameState == GameStateController.State.Playing)
@@ -54,10 +65,7 @@ public class PlayerController : MonoBehaviour
             
             if (velocity.y != 0)
             {
-                rigidbody2d.AddForce(Vector2.up * velocity.y * jumpspeed);
-                velocity.y = 0;
-
-                jumpParticles.Play();
+                Jump();
             }
         }
     }
@@ -74,6 +82,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAlive) return;
         isAlive = false;
+
+        AudioManager.instance.PlayClip(deathSound);
 
         GameStateController.instance.Die();
     }

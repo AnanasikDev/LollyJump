@@ -168,6 +168,7 @@ MonoBehaviour:
   childrenNumber: 0
   deathParticles: {fileID: 4410393121052171084}
   collisionParticles: {fileID: 860320893548846336}
+  deathSound: {fileID: 8300000, guid: 8f36e308b875dea448b98736b2387632, type: 3}
 --- !u!1 &3304415804755139455
 GameObject:
   m_ObjectHideFlags: 0

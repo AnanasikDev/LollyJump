@@ -78,9 +78,11 @@ public class GameStateController : MonoBehaviour
                 yield return new WaitForFixedUpdate();
                 Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.03f);
                 ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/20f));
+                //AudioManager.instance.SetVolume(1 - 5f / i);
             }
             Time.timeScale = 0.25f;
             yield return new WaitForSecondsRealtime(0.5f);
+            AudioManager.instance.SetVolume(1);
 
             ppGrain.active = false;
             ppColorGrading.active = false;
