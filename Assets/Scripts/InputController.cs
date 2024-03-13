@@ -9,10 +9,10 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (SavingSystem.settingsOpened) Environment.settings.CloseSettings();
+                if (Environment.savingSystem.settingsOpened) Environment.settings.CloseSettings();
                 else Environment.settings.OpenSettings();
 
-                Debug.Log("Settings toggles to " + SavingSystem.settingsOpened);
+                Debug.Log("Settings toggles to " + Environment.savingSystem.settingsOpened);
 
                 return;
             }
@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour
 
             else if (Input.anyKey && GameStateController.gameState == GameStateController.State.Freezed)
             {
-                if (!SavingSystem.settingsOpened)
+                if (!Environment.savingSystem.settingsOpened)
                     Environment.gameStateController.EnterGame();
             }
 
@@ -40,7 +40,7 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed && !SavingSystem.settingsOpened)
+            if (Input.touchCount > 0 && GameStateController.gameState == GameStateController.State.Freezed && !Environment.savingSystem.settingsOpened)
             {
                 Environment.gameStateController.EnterGame();
             }

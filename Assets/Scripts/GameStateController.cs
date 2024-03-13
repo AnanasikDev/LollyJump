@@ -44,7 +44,7 @@ public class GameStateController : MonoBehaviour
         Time.timeScale = 1;
 
         Environment.scoreController.SetScore(0);
-        SavingSystem.lastScore = 0;
+        Environment.savingSystem.lastScore = 0;
 
         Environment.scoreController.PlayRestartEffect();
 
@@ -58,8 +58,8 @@ public class GameStateController : MonoBehaviour
     }
     public void ReloadScene()
     {
-        SavingSystem.lastScore = Environment.scoreController.score;
-        SavingSystem.state = gameState;
+        Environment.savingSystem.lastScore = Environment.scoreController.score;
+        Environment.savingSystem.state = gameState;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -67,6 +67,8 @@ public class GameStateController : MonoBehaviour
     {
         IEnumerator DeathShowcase()
         {
+            CandyCoded.HapticFeedback.HapticFeedback.MediumFeedback();
+
             ppGrain.active = true;
             ppColorGrading.active = true;
             float saturation = ppColorGrading.saturation;
@@ -86,7 +88,6 @@ public class GameStateController : MonoBehaviour
 
             ExitGame();
             ReloadScene();
-            Environment.settings.Reload();
         }
         StartCoroutine(DeathShowcase());
     }

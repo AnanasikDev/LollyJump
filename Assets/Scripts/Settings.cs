@@ -50,14 +50,16 @@ public class Settings : MonoBehaviour
         }
 
         Application.targetFrameRate = 80;
+
+        LoadSavedSettings();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            SavingSystem.settingsOpened = !SavingSystem.settingsOpened;
-            if (SavingSystem.settingsOpened) OpenSettings();
+            Environment.savingSystem.settingsOpened = !Environment.savingSystem.settingsOpened;
+            if (Environment.savingSystem.settingsOpened) OpenSettings();
             else CloseSettings();
         }
         fps = Mathf.RoundToInt(1f / Time.deltaTime);
@@ -73,7 +75,7 @@ public class Settings : MonoBehaviour
 
         GameStateController.gameState = GameStateController.State.Freezed;
         Environment.playerController.gameObject.SetActive(false);
-        SavingSystem.settingsOpened = true;
+        Environment.savingSystem.settingsOpened = true;
         settingsWindow.SetActive(true);
         Time.timeScale = 1;
 
@@ -103,7 +105,7 @@ public class Settings : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.4f);
             Environment.playerController.gameObject.SetActive(true);
             yield return new WaitForSecondsRealtime(0.6f);
-            SavingSystem.settingsOpened = false;
+            Environment.savingSystem.settingsOpened = false;
             settingsWindow.SetActive(false);
         }
     }
@@ -121,11 +123,11 @@ public class Settings : MonoBehaviour
         buttonsSize = buttonsSizeSlider.value;
         jumpButton.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
         sideMovementButtons.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
-        SavingSystem.buttonSize = buttonsSize;
+        Environment.savingSystem.buttonSize = buttonsSize;
     }
-    public void Reload()
+    private void LoadSavedSettings()
     {
-        buttonsSizeSlider.value = SavingSystem.buttonSize;
+        buttonsSizeSlider.value = Environment.savingSystem.buttonSize;
         SetButtonsSize();
     }
 }

@@ -1,10 +1,22 @@
-﻿public static class SavingSystem
+﻿using UnityEngine;
+
+public class SavingSystem : MonoBehaviour
 {
-    public static int lastScore;
+    public int lastScore;
 
-    public static float buttonSize = 0.25f;
+    public float buttonSize = 0.25f;
 
-    public static bool settingsOpened = false;
+    public bool settingsOpened = false;
 
-    public static GameStateController.State state = GameStateController.State.Freezed;
+    public GameStateController.State state = GameStateController.State.Freezed;
+
+    private void Awake()
+    {
+        if (Environment.savingSystem != null)
+            Destroy(gameObject);
+        else
+            Environment.savingSystem = this;
+        
+        DontDestroyOnLoad(this.gameObject);
+    }
 }

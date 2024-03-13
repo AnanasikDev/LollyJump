@@ -23,8 +23,18 @@ public class Environment : MonoBehaviour
     [SerializeField] private GameStateController _gameStateController;
     public static GameStateController gameStateController;
 
+    public static SavingSystem savingSystem;
+
+    public bool init { get; private set; }
+
     private void Start()
     {
+        if (!init) Init();
+    }
+    public void Init()
+    {
+        init = true;
+
         gameStateController = _gameStateController;
         gameStateController.Init();
         
