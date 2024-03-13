@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using CandyCoded.HapticFeedback;
+﻿using System;
+using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
@@ -45,11 +45,5 @@ public class InputController : MonoBehaviour
                 Environment.gameStateController.EnterGame();
             }
         }
-    }
-
-    public void ButtonHaptic()
-    {
-        HapticFeedback.LightFeedback();
-        //Handheld.Vibrate();
     }
 }

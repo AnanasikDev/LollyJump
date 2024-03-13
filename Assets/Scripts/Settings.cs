@@ -14,12 +14,15 @@ public class Settings : MonoBehaviour
     [SerializeField] GameObject closeSettingsButton;
     [SerializeField] GameObject exitButton;
 
-    [SerializeField] Slider difficultySlider;
+    [SerializeField] Slider volumeSlider;
     [SerializeField] Slider buttonsSizeSlider;
+
+    [SerializeField] Toggle toggleMuteAudio;
+    [SerializeField] Toggle toggleMuteHaptics;
 
     [SerializeField] Animator settingsAnimator;
 
-    public float buttonsSize;
+    public float buttonsSize { get; private set; }
 
     [SerializeField] GameObject sideMovementButtons;
     [SerializeField] GameObject jumpButton;
@@ -70,6 +73,7 @@ public class Settings : MonoBehaviour
     {
         // To avoid unexpected bugs, prohibit opening settings whilst death animation is running
         if (!Environment.playerController.isAlive) return;
+        if (!Environment.savingSystem.settingsOpened == false) return;
 
         GameStateController.StopGameSession();
 
@@ -125,9 +129,42 @@ public class Settings : MonoBehaviour
         sideMovementButtons.transform.localScale = new Vector3(buttonsSize, buttonsSize, 1);
         Environment.savingSystem.buttonSize = buttonsSize;
     }
+    public void SetVolume()
+    {
+        Environment.savingSystem.volume = volumeSlider.value;
+    }
     private void LoadSavedSettings()
     {
         buttonsSizeSlider.value = Environment.savingSystem.buttonSize;
         SetButtonsSize();
+
+        volumeSlider.value = Environment.savingSystem.volume;
+        SetVolume();
+
+        toggleMuteAudio.isOn = Environment.savingSystem.audioMuted;
+        toggleMuteHaptics.isOn = Environment.savingSystem.hapticsMuted;
+    }
+
+    public void OpenGithubPage()
+    {
+        Application.OpenURL("https://github.com/AnanasikDev/LollyJump");
+    }
+    public void ToggleHaptics()
+    {
+        Environment.savingSystem.hapticsMuted = toggleMuteHaptics.isOn;
+    }
+    public void ToggleAudio()
+    {
+        Environment.savingSystem.audioMuted = toggleMuteAudio.isOn;
+        if (Environment.savingSystem.audioMuted)
+        {
+            volumeSlider.GetComponent<SliderEffect>().SetDisabled();
+            volumeSlider.interactable = false;
+        }
+        else
+        {
+            volumeSlider.GetComponent<SliderEffect>().SetEnabled();
+            volumeSlider.interactable = true;
+        }
     }
 }

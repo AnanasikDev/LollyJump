@@ -64,11 +64,13 @@
     <Compile Include="Assets\Scripts\Environment.cs" />
     <Compile Include="Assets\Scripts\CacheController.cs" />
     <Compile Include="Assets\Scripts\GameStateController.cs" />
+    <Compile Include="Assets\Scripts\HapticsController.cs" />
     <Compile Include="Assets\Prefabs\EnemySettings.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\SliderEffect.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\SavingSystem.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />

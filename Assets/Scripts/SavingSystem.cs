@@ -5,6 +5,9 @@ public class SavingSystem : MonoBehaviour
     public int lastScore;
 
     public float buttonSize = 0.25f;
+    public float volume = 0.8f;
+    public bool hapticsMuted = false;
+    public bool audioMuted = false;
 
     public bool settingsOpened = false;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ public class GameStateController : MonoBehaviour
     private PostProcessProfile ppProfile;
     private ColorGrading ppColorGrading;
     private Grain ppGrain;
+
+    public Action onDied;
 
     public float timeSinceSessionStart { get { return Time.time - timeofstart; } }
     private float timeofstart;
@@ -67,7 +70,7 @@ public class GameStateController : MonoBehaviour
     {
         IEnumerator DeathShowcase()
         {
-            CandyCoded.HapticFeedback.HapticFeedback.MediumFeedback();
+            onDied?.Invoke();
 
             ppGrain.active = true;
             ppColorGrading.active = true;
