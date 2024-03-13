@@ -84,7 +84,6 @@ public class GameStateController : MonoBehaviour
             }
             Time.timeScale = 0.25f;
             yield return new WaitForSecondsRealtime(0.5f);
-            Environment.audioManager.SetVolume(1);
 
             ppGrain.active = false;
             ppColorGrading.active = false;

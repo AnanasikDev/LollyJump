@@ -23,6 +23,9 @@ public class Environment : MonoBehaviour
     [SerializeField] private GameStateController _gameStateController;
     public static GameStateController gameStateController;
 
+    [SerializeField] private HapticsController _hapticsController;
+    public static HapticsController hapticsController;
+
     public static SavingSystem savingSystem;
 
     public bool init { get; private set; }
@@ -48,6 +51,8 @@ public class Environment : MonoBehaviour
         scoreController.Init();
 
         inputController = _inputController;
+        hapticsController = _hapticsController;
+        hapticsController.Init();
 
         playerController = _playerController;
         playerController.Init();

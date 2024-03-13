@@ -139,7 +139,6 @@ public class Settings : MonoBehaviour
         SetButtonsSize();
 
         volumeSlider.value = Environment.savingSystem.volume;
-        SetVolume();
 
         toggleMuteAudio.isOn = Environment.savingSystem.audioMuted;
         toggleMuteHaptics.isOn = Environment.savingSystem.hapticsMuted;

@@ -5,12 +5,12 @@ public class HapticsController : MonoBehaviour
 {
     public void Init()
     {
-        Environment.gameStateController.onDied += VibrateLight;
+        Environment.gameStateController.onDied += VibrateMedium;
     }
 
     private void OnDestroy()
     {
-        Environment.gameStateController.onDied -= VibrateLight;
+        Environment.gameStateController.onDied -= VibrateMedium;
     }
 
     public void VibrateLight() => Vibrate(0);
