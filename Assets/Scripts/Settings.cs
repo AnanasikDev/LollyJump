@@ -44,9 +44,9 @@ public class Settings : MonoBehaviour
         }
         else
         {
-            sideMovementButtons.SetActive(false);
+            /*sideMovementButtons.SetActive(false);
             jumpButton.SetActive(false);
-            openSettingsButton.SetActive(false);
+            openSettingsButton.SetActive(false);*/
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -59,12 +59,6 @@ public class Settings : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Environment.savingSystem.settingsOpened = !Environment.savingSystem.settingsOpened;
-            if (Environment.savingSystem.settingsOpened) OpenSettings();
-            else CloseSettings();
-        }
         fps = Mathf.RoundToInt(1f / Time.deltaTime);
         fpsText.text = $"FPS:{fps}";
     }
@@ -73,14 +67,14 @@ public class Settings : MonoBehaviour
     {
         // To avoid unexpected bugs, prohibit opening settings whilst death animation is running
         if (!Environment.playerController.isAlive) return;
-        if (!Environment.savingSystem.settingsOpened == false) return;
+        if (Environment.savingSystem.settingsOpened) return;
 
-        GameStateController.StopGameSession();
+        Environment.gameStateController.StopGameSession();
 
-        GameStateController.gameState = GameStateController.State.Freezed;
+        Environment.gameStateController.gameState = GameStateController.State.Freezed;
         Environment.playerController.gameObject.SetActive(false);
         Environment.savingSystem.settingsOpened = true;
-        settingsWindow.SetActive(true);
+        //settingsWindow.SetActive(true);
         Time.timeScale = 1;
 
         if (!Application.isMobilePlatform)
@@ -94,6 +88,8 @@ public class Settings : MonoBehaviour
     }
     public void CloseSettings()
     {
+        if (Environment.savingSystem.settingsOpened == false) return;
+
         if (!Application.isMobilePlatform)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -110,7 +106,7 @@ public class Settings : MonoBehaviour
             Environment.playerController.gameObject.SetActive(true);
             yield return new WaitForSecondsRealtime(0.6f);
             Environment.savingSystem.settingsOpened = false;
-            settingsWindow.SetActive(false);
+            //settingsWindow.SetActive(false);
         }
     }
     public void Quit()

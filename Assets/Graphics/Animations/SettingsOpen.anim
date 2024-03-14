@@ -88,19 +88,10 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.28333333
-        value: 0.050980393
-        inSlope: 0.6117647
-        outSlope: 0.6117647
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 0.33333334
-        value: 0.40392157
-        inSlope: 1.9411765
-        outSlope: 1.9411765
+        value: 0.44705883
+        inSlope: 1.1319555
+        outSlope: 1.1319555
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -118,7 +109,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Background panel
+    path: Dark background panel
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -140,7 +131,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 515999041
+      path: 822074608
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -241,19 +232,10 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.28333333
-        value: 0.050980393
-        inSlope: 0.6117647
-        outSlope: 0.6117647
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 0.33333334
-        value: 0.40392157
-        inSlope: 1.9411765
-        outSlope: 1.9411765
+        value: 0.44705883
+        inSlope: 1.1319555
+        outSlope: 1.1319555
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -271,7 +253,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Background panel
+    path: Dark background panel
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0

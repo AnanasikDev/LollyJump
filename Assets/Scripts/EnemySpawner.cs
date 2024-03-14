@@ -71,7 +71,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public IEnumerator Spawn()
     {
-        if (GameStateController.gameState == GameStateController.State.Playing)
+        if (Environment.gameStateController.gameState == GameStateController.State.Playing)
         {
             for (int i = 0; i < CalculateQuantity(); i++)
             {

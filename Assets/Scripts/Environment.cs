@@ -51,6 +51,8 @@ public class Environment : MonoBehaviour
         scoreController.Init();
 
         inputController = _inputController;
+        inputController.Init();
+
         hapticsController = _hapticsController;
         hapticsController.Init();
 

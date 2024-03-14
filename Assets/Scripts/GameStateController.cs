@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameStateController : MonoBehaviour
 {
-    public static State gameState = State.Freezed;
+    public State gameState = State.Freezed;
 
     private new Camera camera;
     private PostProcessProfile ppProfile;
@@ -32,7 +32,7 @@ public class GameStateController : MonoBehaviour
     /// respawns player's ball, deletes all particles,
     /// effects, and enemies, nullifies score etc.
     /// </summary>
-    public static void StopGameSession()
+    public void StopGameSession()
     {
         gameState = State.Freezed;
         Environment.playerController.Respawn();
@@ -84,6 +84,7 @@ public class GameStateController : MonoBehaviour
             }
             Time.timeScale = 0.25f;
             yield return new WaitForSecondsRealtime(0.5f);
+            Time.timeScale = 1;
 
             ppGrain.active = false;
             ppColorGrading.active = false;

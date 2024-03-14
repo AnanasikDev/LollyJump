@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (GameStateController.gameState == GameStateController.State.Playing)
+        if (Environment.gameStateController.gameState == GameStateController.State.Playing)
         {
             if (MoveImpulse) rigidbody2d.AddForce(Vector2.right * velocity.x * speed);
             else rigidbody2d.velocity = new Vector2(velocity.x * speed * 1.75f, rigidbody2d.velocity.y);
