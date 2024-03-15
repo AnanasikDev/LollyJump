@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ParticleSystem jumpParticles;
 
     [SerializeField] AudioClip jumpSound;
-    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip deathSound1;
+    [SerializeField] AudioClip deathSound2;
 
     public void Init()
     {
@@ -80,7 +81,8 @@ public class PlayerController : MonoBehaviour
         if (!isAlive) return;
         isAlive = false;
 
-        Environment.audioManager.PlayClip(deathSound, 0.85f);
+        Environment.audioManager.PlayClip(deathSound1, 0.65f);
+        Environment.audioManager.PlayClip(deathSound2, 0.65f);
 
         Environment.gameStateController.Die();
     }
