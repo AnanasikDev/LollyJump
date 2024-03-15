@@ -8,6 +8,9 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
+	"last_search.3BE40471" = "text"
+	"OpenInspectorPreview.3BE40471" = "0"
+	"currentGroup.3BE40471" = "scene"
 }
 providers = {
 	adb = {
@@ -59,15 +62,17 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"t"
+	""
+	"TextMeshPro - Text (UI)"
 ]
 searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
-showSavedSearchPanel = false
+showSavedSearchPanel = true
 hideTabs = false
-expandedQueries = [
-]
-queryBuilder = false
+expandedQueries = [961552606]
+queryBuilder = true
 ignoredProperties = "id;name;classname;imagecontentshash"
 helperWidgetCurrentArea = "all"
 disabledIndexers = ""
