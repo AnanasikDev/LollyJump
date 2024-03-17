@@ -3,6 +3,7 @@
 public class SavingSystem : MonoBehaviour
 {
     public int lastScore;
+    public int maxScore;
 
     public float buttonSize = 0.25f;
     public float volume = 0.8f;

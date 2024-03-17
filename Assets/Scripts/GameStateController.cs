@@ -14,6 +14,7 @@ public class GameStateController : MonoBehaviour
     private Grain ppGrain;
 
     public Action onDied;
+    public Action onEnterGame;
 
     public float timeSinceSessionStart { get { return Time.time - timeofstart; } }
     private float timeofstart;
@@ -52,6 +53,8 @@ public class GameStateController : MonoBehaviour
         Environment.scoreController.PlayRestartEffect();
 
         Environment.playerController.Activate();
+        
+        onEnterGame?.Invoke();
     }
     public void ExitGame()
     {

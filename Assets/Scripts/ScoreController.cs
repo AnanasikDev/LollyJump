@@ -6,15 +6,35 @@ public class ScoreController : MonoBehaviour
 
     //[SerializeField] ParticleSystem[] AdditionEffectParticles;
     //[SerializeField] ParticleSystem[] RestartEffectParticles;
-    private Animator anim;
+    private Animator scoreAnimator;
+
+    private Animation maxScoreAnimation;
+    [SerializeField] private AnimationClip maxScoreVanishClip;
 
     public int score { get; private set; }
-    public TextMeshProUGUI text;
+
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI maxScoreText;
 
     public void Init()
     {
         SetScore(Environment.savingSystem.lastScore);
-        anim = text.GetComponent<Animator>();
+        scoreAnimator = scoreText.GetComponent<Animator>();
+        maxScoreAnimation = maxScoreText.GetComponent<Animation>();
+        //maxScoreAnimation.GetClip("MaxScoreVanish").legacy = true;
+        maxScoreVanishClip.legacy = true;
+        Environment.gameStateController.onEnterGame += EnterGameCallback;
+        maxScoreText.text = $"max: {Environment.savingSystem.maxScore}";
+    }
+    private void OnDestroy()
+    {
+        Environment.gameStateController.onEnterGame -= EnterGameCallback;
+    }
+
+    private void EnterGameCallback()
+    {
+        Debug.Log(maxScoreAnimation.GetClipCount());
+        maxScoreAnimation.Play();
     }
 
     public void PlayAdditionEffect()
@@ -25,8 +45,8 @@ public class ScoreController : MonoBehaviour
             particles.Play();
             Destroy(particles, 3);
         }*/
-        anim = text.GetComponent<Animator>();
-        anim.SetTrigger("Add");
+        scoreAnimator = scoreText.GetComponent<Animator>();
+        scoreAnimator.SetTrigger("Add");
     }
     public void PlayRestartEffect()
     {
@@ -41,7 +61,8 @@ public class ScoreController : MonoBehaviour
     public void SetScore(int n)
     {
         score = n;
-        text.text = score.ToString();
+        Environment.savingSystem.maxScore = (score > Environment.savingSystem.maxScore) ? score : Environment.savingSystem.maxScore;
+        scoreText.text = score.ToString();
 
         //if (score > 0) // Do not play on awake
         //    PlayAdditionEffect();
