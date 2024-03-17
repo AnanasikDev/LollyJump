@@ -32,8 +32,15 @@ public class Settings : MonoBehaviour
 
     public float difficulty;
 
+    private Animation openSettingsAnimation;
+    [SerializeField] private AnimationClip settingsButtonVanishClip;
+
     public void Init()
     {
+        openSettingsAnimation = openSettingsButton.GetComponent<Animation>();
+        settingsButtonVanishClip.legacy = true;
+        Environment.gameStateController.onEnterGame += GameEnterCallback;
+
         buttonsSize = jumpButton.transform.localScale.x;
 
         if (Application.isMobilePlatform)
@@ -55,6 +62,10 @@ public class Settings : MonoBehaviour
         Application.targetFrameRate = 80;
 
         LoadSavedSettings();
+    }
+    private void OnDestroy()
+    {
+        Environment.gameStateController.onEnterGame -= GameEnterCallback;
     }
 
     private void Update()
@@ -161,5 +172,10 @@ public class Settings : MonoBehaviour
             volumeSlider.GetComponent<SliderEffect>().SetEnabled();
             volumeSlider.interactable = true;
         }
+    }
+
+    private void GameEnterCallback()
+    {
+        openSettingsAnimation.Play();
     }
 }

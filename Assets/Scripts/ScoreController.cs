@@ -33,7 +33,6 @@ public class ScoreController : MonoBehaviour
 
     private void EnterGameCallback()
     {
-        Debug.Log(maxScoreAnimation.GetClipCount());
         maxScoreAnimation.Play();
     }
 
