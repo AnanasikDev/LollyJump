@@ -2682,7 +2682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.03137255, g: 0.17254902, b: 0.32941177, a: 0.61960787}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3614,6 +3614,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 3b2fd3ab0b76d5c44bef4d4154658bf7, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 3b2fd3ab0b76d5c44bef4d4154658bf7, type: 2}
+  - {fileID: 7400000, guid: 3d8a1427642e3c64facea72c525aad35, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -5052,6 +5053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxScoreVanishClip: {fileID: 7400000, guid: 3b2fd3ab0b76d5c44bef4d4154658bf7, type: 2}
+  maxScoreResetClip: {fileID: 7400000, guid: 3d8a1427642e3c64facea72c525aad35, type: 2}
   scoreText: {fileID: 499775958}
   maxScoreText: {fileID: 1042387218}
 --- !u!114 &1565459790
@@ -5104,7 +5106,9 @@ MonoBehaviour:
   jumpButton: {fileID: 864604535}
   fpsText: {fileID: 1618320942}
   difficulty: 0
-  settingsButtonVanishClip: {fileID: 7400000, guid: 4424002801712cf45b15a83eda7aea84,
+  toggleSettings_VanishClip: {fileID: 7400000, guid: 4424002801712cf45b15a83eda7aea84,
+    type: 2}
+  toggleSettings_ResetClip: {fileID: 7400000, guid: 6100ff596e816ad4088b14ba1ced530d,
     type: 2}
 --- !u!82 &1565459793
 AudioSource:
@@ -5371,7 +5375,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.031591307, g: 0.17213847, b: 0.3283019, a: 0.6156863}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -10, y: -10, z: -18.71, w: -10}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5423,6 +5427,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 4424002801712cf45b15a83eda7aea84, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 4424002801712cf45b15a83eda7aea84, type: 2}
+  - {fileID: 7400000, guid: 6100ff596e816ad4088b14ba1ced530d, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -5461,7 +5466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 531.9, y: 240.2}
+  m_AnchoredPosition: {x: 559.1, y: 240.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1618320942

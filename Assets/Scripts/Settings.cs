@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System;
 
 public class Settings : MonoBehaviour
 {
@@ -32,14 +33,20 @@ public class Settings : MonoBehaviour
 
     public float difficulty;
 
-    private Animation openSettingsAnimation;
-    [SerializeField] private AnimationClip settingsButtonVanishClip;
+    private Animation toggleSettings_AnimationController;
+    [SerializeField] private AnimationClip toggleSettings_VanishClip;
+    [SerializeField] private AnimationClip toggleSettings_ResetClip;
+
+    public Action onSettingsOpen;
+    public Action onSettingsClose;
 
     public void Init()
     {
-        openSettingsAnimation = openSettingsButton.GetComponent<Animation>();
-        settingsButtonVanishClip.legacy = true;
+        toggleSettings_AnimationController = openSettingsButton.GetComponent<Animation>();
+        toggleSettings_VanishClip.legacy = true;
+        toggleSettings_ResetClip.legacy = true;
         Environment.gameStateController.onEnterGame += GameEnterCallback;
+        onSettingsOpen += SettingsOpenCallback;
 
         buttonsSize = jumpButton.transform.localScale.x;
 
@@ -66,6 +73,7 @@ public class Settings : MonoBehaviour
     private void OnDestroy()
     {
         Environment.gameStateController.onEnterGame -= GameEnterCallback;
+        onSettingsOpen -= SettingsOpenCallback;
     }
 
     private void Update()
@@ -81,6 +89,7 @@ public class Settings : MonoBehaviour
         if (Environment.savingSystem.settingsOpened) return;
 
         Environment.gameStateController.StopGameSession();
+        onSettingsOpen?.Invoke();
 
         Environment.gameStateController.gameState = GameStateController.State.Freezed;
         Environment.playerController.gameObject.SetActive(false);
@@ -100,6 +109,8 @@ public class Settings : MonoBehaviour
     public void CloseSettings()
     {
         if (Environment.savingSystem.settingsOpened == false) return;
+        
+        onSettingsClose?.Invoke();
 
         if (!Application.isMobilePlatform)
         {
@@ -176,6 +187,11 @@ public class Settings : MonoBehaviour
 
     private void GameEnterCallback()
     {
-        openSettingsAnimation.Play();
+        // Start animation of disappearing of toggleSettings
+        toggleSettings_AnimationController.Play("SettingsButtonVanish");
+    }
+    private void SettingsOpenCallback()
+    {
+        toggleSettings_AnimationController.Play("SettingsButtonReset");
     }
 }

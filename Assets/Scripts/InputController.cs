@@ -53,6 +53,8 @@ public class InputController : MonoBehaviour
         {
             if (Input.touchCount > 0 && Environment.gameStateController.gameState == GameStateController.State.Freezed && !Environment.savingSystem.settingsOpened)
             {
+                if (Environment.savingSystem.settingsOpened) return;
+
                 Environment.gameStateController.EnterGame();
                 RecordLastAction();
             }

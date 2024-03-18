@@ -10,6 +10,7 @@ public class ScoreController : MonoBehaviour
 
     private Animation maxScoreAnimation;
     [SerializeField] private AnimationClip maxScoreVanishClip;
+    [SerializeField] private AnimationClip maxScoreResetClip;
 
     public int score { get; private set; }
 
@@ -23,17 +24,24 @@ public class ScoreController : MonoBehaviour
         maxScoreAnimation = maxScoreText.GetComponent<Animation>();
         //maxScoreAnimation.GetClip("MaxScoreVanish").legacy = true;
         maxScoreVanishClip.legacy = true;
+        maxScoreResetClip.legacy = true;
         Environment.gameStateController.onEnterGame += EnterGameCallback;
+        Environment.settings.onSettingsOpen += OpenSettingsCallback;
         maxScoreText.text = $"max: {Environment.savingSystem.maxScore}";
     }
     private void OnDestroy()
     {
         Environment.gameStateController.onEnterGame -= EnterGameCallback;
+        Environment.settings.onSettingsOpen -= OpenSettingsCallback;
     }
 
     private void EnterGameCallback()
     {
-        maxScoreAnimation.Play();
+        maxScoreAnimation.Play("MaxScoreVanish");
+    }
+    private void OpenSettingsCallback()
+    {
+        maxScoreAnimation.Play("MaxScoreReset");
     }
 
     public void PlayAdditionEffect()

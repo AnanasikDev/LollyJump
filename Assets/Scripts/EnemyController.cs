@@ -53,9 +53,10 @@ public class EnemyController : MonoBehaviour
     }
     void PlayCollisionParticles()
     {
+        Environment.enemySpawner.entities.Add(collisionParticles.gameObject);
         collisionParticles.transform.parent = null;
         collisionParticles.Play();
-        Destroy(collisionParticles, 4);
+        DestroyAndRemove(collisionParticles.gameObject, 2);
     }
     void PlayDeathParticles()
     {
@@ -63,7 +64,7 @@ public class EnemyController : MonoBehaviour
         deathParticles.transform.parent = null;
         //deathParticles.transform.localEulerAngles = new Vector3(90, 0, 0);
         deathParticles.Play();
-        DestroyAndRemove(deathParticles.gameObject, 4);
+        DestroyAndRemove(deathParticles.gameObject, 3);
         
     }
     private void DestroyAndRemove(GameObject o, float time=0)
@@ -91,13 +92,15 @@ public class EnemyController : MonoBehaviour
                 Environment.enemySpawner.AddEntity(child);
             }
             transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y / 1.5f);
+            PlayCollisionParticles();
         }
+        else
+            PlayDeathParticles();
         //PlayerController.instance.audioSource.PlayOneShot(PlayerController.instance.audioSource.clip, Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f)*5f));
 
         float volume = Mathf.Clamp01(Mathf.Pow(transform.localScale.x, 2f) * 5f);
         Environment.audioManager.PlayClip(deathSound, volume);
         
-        PlayDeathParticles();
         DestroyAndRemove(gameObject);
     }
 }
