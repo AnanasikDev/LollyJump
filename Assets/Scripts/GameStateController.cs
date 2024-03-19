@@ -82,7 +82,10 @@ public class GameStateController : MonoBehaviour
             for (int i = 0; i < 35; i++)
             {
                 yield return new WaitForFixedUpdate();
-                Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.02f);
+                
+                if (i < 20)
+                    Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.02f);
+                
                 ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/30f));
             }
             Time.timeScale = 0.25f;
@@ -92,6 +95,7 @@ public class GameStateController : MonoBehaviour
             ppGrain.active = false;
             ppColorGrading.active = false;
 
+            Environment.playerController.Disactivate();
             ExitGame();
             ReloadScene();
         }

@@ -12512,7 +12512,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.35
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -13034,7 +13034,7 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 120
-      mode: 0
+      mode: 3
       spread: 0
       speed:
         serializedVersion: 2
@@ -13205,7 +13205,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 11
         minScalar: 30
         maxCurve:
           serializedVersion: 2

@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody2d.simulated = false;
         deathParticles.Stop();
+        deathParticles.Clear();
         jumpParticles.Stop();
+        jumpParticles.Clear();
     }
 
     public void SetJumpVelocity()
