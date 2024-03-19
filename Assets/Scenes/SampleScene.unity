@@ -1489,9 +1489,9 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281545523
-  m_fontColor: {r: 0.19999999, g: 0.19999999, b: 0.19999999, a: 1}
-  m_enableVertexGradient: 1
+    rgba: 4281939749
+  m_fontColor: {r: 0.1440868, g: 0.2156276, b: 0.22264141, a: 1}
+  m_enableVertexGradient: 0
   m_colorMode: 0
   m_fontColorGradient:
     topLeft: {r: 0.24595942, g: 0.5263905, b: 0.554717, a: 1}
@@ -21062,7 +21062,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.4
     collidesWith:
       serializedVersion: 2
       m_Bits: 1655

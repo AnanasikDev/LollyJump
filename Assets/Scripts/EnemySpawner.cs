@@ -50,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
     {
         return new Vector2
             (
-                Random.Range(leftBarrier.position.x, rightBarrier.position.x),
+                Random.Range(leftBarrier.position.x + 1.25f, rightBarrier.position.x - 1.25f),
                 Random.Range(heightOfSpawn.position.y - 0.3f, heightOfSpawn.position.y + 0.3f)
             );
     }
@@ -139,4 +139,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
     public void AddEntity(GameObject entity) => entities.Add(entity);
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(new Vector3(leftBarrier.transform.position.x + 1.25f, heightOfSpawn.position.y), 0.25f);
+        Gizmos.DrawWireSphere(new Vector3(rightBarrier.transform.position.x - 1.25f, heightOfSpawn.position.y), 0.25f);
+    }
 }
