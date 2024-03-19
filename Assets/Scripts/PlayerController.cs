@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool MoveImpulse = true;
 
     [SerializeField] ParticleSystem jumpParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] GameObject ballObject;
+    [SerializeField] GameObject trailEffectObject;
 
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip deathSound1;
@@ -25,7 +28,6 @@ public class PlayerController : MonoBehaviour
         origin = transform.position;
         rigidbody2d = GetComponent<Rigidbody2D>();
         Disactivate();
-        jumpParticles.transform.localEulerAngles = new Vector3(90, 90, 0);
         Respawn();
     }
     public void Activate()
@@ -36,6 +38,8 @@ public class PlayerController : MonoBehaviour
     public void Disactivate()
     {
         rigidbody2d.simulated = false;
+        deathParticles.Stop();
+        jumpParticles.Stop();
     }
 
     public void SetJumpVelocity()
@@ -83,6 +87,12 @@ public class PlayerController : MonoBehaviour
 
         Environment.audioManager.PlayClip(deathSound1, 0.65f);
         Environment.audioManager.PlayClip(deathSound2, 0.65f);
+        deathParticles.transform.rotation = Quaternion.FromToRotation(-deathParticles.transform.up, transform.position + new Vector3(rigidbody2d.velocity.x, rigidbody2d.velocity.y)); // Quaternion.LookRotation(Vector3.forward, deathParticles.transform.);
+        //deathParticles.transform.LookAt(transform.position + new Vector3(rigidbody2d.velocity.x, rigidbody2d.velocity.y) * 3, -deathParticles.transform.up);
+        
+        deathParticles.Play();
+        ballObject.SetActive(false);
+        trailEffectObject.SetActive(false);
 
         Environment.gameStateController.Die();
     }
