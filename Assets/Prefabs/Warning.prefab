@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5067916665947716931}
   - component: {fileID: 3755705035894571035}
   m_Layer: 9
-  m_Name: BallShadow
+  m_Name: Warning
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
