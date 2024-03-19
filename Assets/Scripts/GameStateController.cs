@@ -79,11 +79,11 @@ public class GameStateController : MonoBehaviour
             ppColorGrading.active = true;
             float saturation = ppColorGrading.saturation;
             Time.timeScale = 1;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 35; i++)
             {
                 yield return new WaitForFixedUpdate();
-                Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.03f);
-                ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/20f));
+                Time.timeScale = Mathf.Clamp01(Time.timeScale - 0.02f);
+                ppColorGrading.saturation.value = Mathf.Clamp01(Mathf.Lerp(0, saturation, i/30f));
             }
             Time.timeScale = 0.25f;
             yield return new WaitForSecondsRealtime(0.5f);
