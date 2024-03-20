@@ -53,7 +53,11 @@ public class ScoreController : MonoBehaviour
             Destroy(particles, 3);
         }*/
         scoreAnimator = scoreText.GetComponent<Animator>();
-        scoreAnimator.SetTrigger("Add");
+        if (score % 100 == 0)
+            scoreAnimator.SetTrigger("Add100");
+        else
+            scoreAnimator.SetTrigger("Add1 ");
+
     }
     public void PlayRestartEffect()
     {
