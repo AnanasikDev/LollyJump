@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour
                 GameObject child = Instantiate(gameObject, transform.position + new Vector3((Random.value-0.5f)*2, Random.value), Quaternion.identity);
                 var enemyController = child.GetComponent<EnemyController>();
                 enemyController.Init(settings, transform.localScale.x / 1.5f, livesLeft - 1, childrenNumber - 1);
-                Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1) * settings.bounciness;
+                Vector3 force = new Vector3(Random.Range(-settings.unpredictability, settings.unpredictability), 1).normalized * settings.bounciness;
                 enemyController.rigidbody2d.AddForce(force);
                 Environment.enemySpawner.AddEntity(child);
             }

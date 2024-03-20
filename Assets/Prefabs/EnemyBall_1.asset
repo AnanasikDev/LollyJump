@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemyBall_1
   m_EditorClassIdentifier: 
   color: {r: 0.87169814, g: 0.37334993, b: 0.37334993, a: 1}
-  bounciness: 200
-  unpredictability: 0.2
+  bounciness: 350
+  unpredictability: 0.1
   inheritance: 2
   maxLives: 1
   frequency: 0.3
