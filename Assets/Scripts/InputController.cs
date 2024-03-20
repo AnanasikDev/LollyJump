@@ -49,15 +49,16 @@ public class InputController : MonoBehaviour
                 RecordLastAction();
             }
         }
-        else
-        {
-            if (Input.touchCount > 0 && Environment.gameStateController.gameState == GameStateController.State.Freezed && !Environment.savingSystem.settingsOpened)
-            {
-                if (Environment.savingSystem.settingsOpened) return;
+    }
 
-                Environment.gameStateController.EnterGame();
-                RecordLastAction();
-            }
+    // On Button tap
+    public void StartGame()
+    {
+        if (Environment.gameStateController.gameState == GameStateController.State.Freezed && !Environment.savingSystem.settingsOpened)
+        {
+            Environment.gameStateController.EnterGame();
+            //Environment.settings.DebugLog("Enter game touch");
+            RecordLastAction();
         }
     }
 }

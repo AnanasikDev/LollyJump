@@ -3,9 +3,7 @@ using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
-    private Animation maxScoreAnimation;
-    [SerializeField] private AnimationClip maxScoreVanishClip;
-    [SerializeField] private AnimationClip maxScoreResetClip;
+    [SerializeField] private Animator maxScoreAnimator;
 
     public int score { get; private set; }
 
@@ -15,26 +13,22 @@ public class ScoreController : MonoBehaviour
     public void Init()
     {
         SetScore(Environment.savingSystem.lastScore);
-        maxScoreAnimation = maxScoreText.GetComponent<Animation>();
-        maxScoreVanishClip.legacy = true;
-        maxScoreResetClip.legacy = true;
-        Environment.gameStateController.onEnterGame += EnterGameCallback;
-        Environment.settings.onSettingsOpen += OpenSettingsCallback;
+        Environment.gameStateController.onEnterGame += MaxScore_Vanish;
+        //Environment.settings.onSettingsOpen += OpenSettingsCallback;
         maxScoreText.text = $"max: {Environment.savingSystem.maxScore}";
     }
     private void OnDestroy()
     {
-        Environment.gameStateController.onEnterGame -= EnterGameCallback;
-        Environment.settings.onSettingsOpen -= OpenSettingsCallback;
+        Environment.gameStateController.onEnterGame -= MaxScore_Vanish;
+        //Environment.settings.onSettingsOpen -= OpenSettingsCallback;
     }
 
-    private void EnterGameCallback()
+    private void MaxScore_Vanish()
     {
-        maxScoreAnimation.Play("MaxScoreVanish");
+        maxScoreAnimator.SetTrigger("MaxScoreVanish");
     }
     private void OpenSettingsCallback()
     {
-        maxScoreAnimation.Play("MaxScoreReset");
     }
 
     public void SetScore(int n)

@@ -33,9 +33,7 @@ public class Settings : MonoBehaviour
 
     public float difficulty;
 
-    private Animation toggleSettings_AnimationController;
-    [SerializeField] private AnimationClip toggleSettings_VanishClip;
-    [SerializeField] private AnimationClip toggleSettings_ResetClip;
+    [SerializeField] private Animator toggleSettingsAnimator;
 
     public TextMeshProUGUI debug;
 
@@ -44,11 +42,8 @@ public class Settings : MonoBehaviour
 
     public void Init()
     {
-        toggleSettings_AnimationController = openSettingsButton.GetComponent<Animation>();
-        toggleSettings_VanishClip.legacy = true;
-        toggleSettings_ResetClip.legacy = true;
-        Environment.gameStateController.onEnterGame += GameEnterCallback;
-        onSettingsOpen += SettingsOpenCallback;
+        Environment.gameStateController.onEnterGame += ToggleSettings_Vanish;
+        //onSettingsOpen += SettingsOpenCallback;
 
         buttonsSize = jumpButton.transform.localScale.x;
 
@@ -74,8 +69,8 @@ public class Settings : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Environment.gameStateController.onEnterGame -= GameEnterCallback;
-        onSettingsOpen -= SettingsOpenCallback;
+        Environment.gameStateController.onEnterGame -= ToggleSettings_Vanish;
+        //onSettingsOpen -= SettingsOpenCallback;
     }
 
     private void Update()
@@ -187,15 +182,18 @@ public class Settings : MonoBehaviour
         }
     }
 
-    private void GameEnterCallback()
+    private void ToggleSettings_Vanish()
     {
         // Start animation of disappearing of toggleSettings
-        toggleSettings_AnimationController.Play("SettingsButtonVanish");
-        debug.text += "SettingsButtonVanish\n";
+        toggleSettingsAnimator.SetTrigger("SettingsButtonVanish");
     }
-    private void SettingsOpenCallback()
+    private void ToggleSettings_Reset()
     {
-        toggleSettings_AnimationController.Play("SettingsButtonReset");
-        debug.text += "SettingsButtonReset\n";
+        toggleSettingsAnimator.SetTrigger("SettingsButtonReset");
+    }
+
+    public void DebugLog(string message)
+    {
+        debug.text += message + "\n";
     }
 }

@@ -11,7 +11,7 @@ public class IdleFlashEffect : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI text;
 
-    private string baseEffect = "Tap anywhere\nto start";
+    private string baseEffect = "Hit any button\nto start";
     private string eastereggEffect = "Why don't you?";
 
     private void Start()
