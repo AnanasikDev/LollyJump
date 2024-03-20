@@ -37,6 +37,8 @@ public class Settings : MonoBehaviour
     [SerializeField] private AnimationClip toggleSettings_VanishClip;
     [SerializeField] private AnimationClip toggleSettings_ResetClip;
 
+    public TextMeshProUGUI debug;
+
     public Action onSettingsOpen;
     public Action onSettingsClose;
 
@@ -189,9 +191,11 @@ public class Settings : MonoBehaviour
     {
         // Start animation of disappearing of toggleSettings
         toggleSettings_AnimationController.Play("SettingsButtonVanish");
+        debug.text += "SettingsButtonVanish\n";
     }
     private void SettingsOpenCallback()
     {
         toggleSettings_AnimationController.Play("SettingsButtonReset");
+        debug.text += "SettingsButtonReset\n";
     }
 }

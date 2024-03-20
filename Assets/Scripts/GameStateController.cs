@@ -50,8 +50,6 @@ public class GameStateController : MonoBehaviour
         Environment.scoreController.SetScore(0);
         Environment.savingSystem.lastScore = 0;
 
-        Environment.scoreController.PlayRestartEffect();
-
         Environment.playerController.Activate();
         
         onEnterGame?.Invoke();
