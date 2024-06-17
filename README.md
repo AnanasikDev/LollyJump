@@ -10,8 +10,8 @@ This project was made for education and portfolio.
 
 # Screenshots
 
-<img src="./ScreenShots/screenshot1.jpg">
-<img src="./ScreenShots/screenshot2.jpg">
-<img src="./ScreenShots/screenshot3.jpg">
-<img src="./ScreenShots/screenshot4.jpg">
-<img src="./ScreenShots/screenshot5.jpg">
+<img src="./Screenshots/screenshot1.jpg">
+<img src="./Screenshots/screenshot2.jpg">
+<img src="./Screenshots/screenshot3.jpg">
+<img src="./Screenshots/screenshot4.jpg">
+<img src="./Screenshots/screenshot5.jpg">
