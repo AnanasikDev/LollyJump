@@ -1,4 +1,8 @@
+
+# if UNITY_ANDROID || UNITY_IOS
 using CandyCoded.HapticFeedback;
+# endif
+
 using UnityEngine;
 
 public class HapticsController : MonoBehaviour
@@ -19,6 +23,8 @@ public class HapticsController : MonoBehaviour
 
     public void Vibrate(int intensity)
     {
+#if UNITY_ANDROID || UNITY_IOS
+
         if (Environment.savingSystem.hapticsMuted) return;
 
         switch (intensity)
@@ -35,5 +41,7 @@ public class HapticsController : MonoBehaviour
                 HapticFeedback.HeavyFeedback();
                 break;
         }
+
+#endif
     }
 }

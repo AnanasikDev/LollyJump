@@ -51,12 +51,22 @@ public class GameStateController : MonoBehaviour
         Environment.savingSystem.lastScore = 0;
 
         Environment.playerController.Activate();
-        
+
+#if !UNITY_IOS && !UNITY_ANDROID
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+#endif
+
         onEnterGame?.Invoke();
     }
     public void ExitGame()
     {
         gameState = State.Freezed;
+
+#if !UNITY_IOS && !UNITY_ANDROID
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+#endif
 
         Environment.playerController.Respawn();
     }
